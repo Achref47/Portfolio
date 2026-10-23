@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Light is the default; dark applies when the visitor picks it
+ * (data-theme="dark", set by the toggle) or, before any choice, when the
+ * system prefers dark.
+ */
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --surface-2: #eeece6;
+  --ink: #15171a;
+  --ink-2: #41454c;
+  --ink-3: #62666e;
+  --line: #dcd9d0;
+  --line-strong: #c4c0b5;
+  --accent: #0a6b57;
+  --accent-ink: #ffffff;
+  --accent-soft: #dcede7;
+  --live: #0a6b57;
+  --video: #9a4f00;
+  --docs: #2849b0;
+  --source: #15171a;
+  --shadow: 0 1px 2px rgb(20 20 20 / 0.04), 0 8px 24px -12px rgb(20 20 20 / 0.12);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0d0f12;
+  --surface: #14171b;
+  --surface-2: #1b1f24;
+  --ink: #ecebe6;
+  --ink-2: #c0c2c6;
+  --ink-3: #9a9ea5;
+  --line: #2a2f36;
+  --line-strong: #3a4049;
+  --accent: #4fd1ae;
+  --accent-ink: #062019;
+  --accent-soft: #10302a;
+  --live: #4fd1ae;
+  --video: #f2b766;
+  --docs: #9db4ff;
+  --source: #ecebe6;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -16px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0f12;
+    --surface: #14171b;
+    --surface-2: #1b1f24;
+    --ink: #ecebe6;
+    --ink-2: #c0c2c6;
+    --ink-3: #9a9ea5;
+    --line: #2a2f36;
+    --line-strong: #3a4049;
+    --accent: #4fd1ae;
+    --accent-ink: #062019;
+    --accent-soft: #10302a;
+    --live: #4fd1ae;
+    --video: #f2b766;
+    --docs: #9db4ff;
+    --source: #ecebe6;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -16px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-live: var(--live);
+  --color-video: var(--video);
+  --color-docs: var(--docs);
+  --color-source: var(--source);
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --shadow-card: var(--shadow);
+}
+
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Faint engineering grid used behind the hero card. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Long-form text inside case studies. */
+.prose-body p + p {
+  margin-top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
