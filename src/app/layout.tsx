@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif } from "next/font/google";
+import { BackToTop, PointerEffects } from "@/components/effects";
+import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { education } from "@/content/experience";
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
+import { getCommandItems } from "@/lib/command-items";
 import { siteUrl } from "@/lib/content";
 import { themeInitScript } from "@/lib/theme-script";
 import "./globals.css";
@@ -48,6 +52,20 @@ export const viewport: Viewport = {
   ],
 };
 
+/** Structured data describing the site owner (schema.org Person), sanitised as the Next.js JSON-LD guide recommends. */
+const personJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: "Software Engineer",
+  ...(profile.photo ? { image: new URL(profile.photo.src, siteUrl).toString() } : {}),
+  email: `mailto:${profile.email}`,
+  address: { "@type": "PostalAddress", addressLocality: profile.location.split(",")[0], addressCountry: "TN" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: education.school },
+  sameAs: [profile.links.github, profile.links.linkedin, profile.links.youtube],
+  knowsAbout: ["Software engineering", "Full-stack development", "Machine learning", "Data science", "LLM applications"],
+}).replace(/</g, "\\u003c");
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -57,13 +75,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personJsonLd }} />
       </head>
       <body className="flex min-h-screen flex-col">
-        <SiteHeader />
+        <SiteHeader commands={getCommandItems()} />
         <main id="main" className="flex-1">
           {children}
         </main>
         <SiteFooter />
+        <RevealOnScroll />
+        <PointerEffects />
+        <BackToTop />
       </body>
     </html>
   );

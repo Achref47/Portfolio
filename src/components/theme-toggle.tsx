@@ -34,7 +34,9 @@ export function ThemeToggle() {
       aria-label={theme ? `Switch to ${next} theme` : "Toggle colour theme"}
       className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
     >
-      {theme === "dark" ? <Sun className="h-[18px] w-[18px]" /> : <Moon className="h-[18px] w-[18px]" />}
+      <span key={theme ?? "unknown"} className="animate-fade-in">
+        {theme === "dark" ? <Sun className="h-[18px] w-[18px]" /> : <Moon className="h-[18px] w-[18px]" />}
+      </span>
     </button>
   );
 }

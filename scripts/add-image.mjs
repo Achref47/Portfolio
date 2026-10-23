@@ -10,6 +10,7 @@
  *   --crop-bottom=N   remove N pixels from the bottom
  *   --max-width=N     resize so the width is at most N pixels (default 1600)
  *   --quality=N       WebP quality, 1-100 (default 80)
+ *   --rotate=N        rotate clockwise by N degrees first (90, 180, 270) for sideways photos
  *
  * The result is written to public/projects/<project-slug>/<output-name>.webp.
  */
@@ -48,8 +49,11 @@ const cropBottom = flags["crop-bottom"] || 0;
 const maxWidth = flags["max-width"] || 1600;
 const quality = flags.quality || 80;
 
-const meta = await sharp(input).metadata();
-let pipeline = sharp(input);
+const rotate = flags.rotate || 0;
+// Rotate (and apply EXIF orientation) first so crops refer to the upright image.
+const upright = await sharp(input).rotate(rotate || undefined).toBuffer();
+const meta = await sharp(upright).metadata();
+let pipeline = sharp(upright);
 if (cropTop || cropBottom) {
   pipeline = pipeline.extract({
     left: 0,

@@ -4,19 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { profile } from "@/content/profile";
+import { site } from "@/content/site";
+import type { CommandItem } from "@/lib/command-items";
+import { CommandPalette } from "./command-palette";
 import { Close, GitHubMark, Menu } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
 
-const nav = [
-  { href: "/projects", label: "Projects" },
-  { href: "/#about", label: "About" },
-  { href: "/#experience", label: "Experience" },
-  { href: "/#contact", label: "Contact" },
-];
+const nav = site.nav;
+const sectionIds = nav.map((n) => n.href.split("#")[1]).filter((id): id is string => Boolean(id));
 
-export function SiteHeader() {
+export function SiteHeader({ commands = [] }: { commands?: CommandItem[] }) {
   const pathname = usePathname();
   const [openFor, setOpenFor] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [section, setSection] = useState<string | null>(null);
   // The menu closes itself on navigation because it is tied to the current path.
   const open = openFor === pathname;
 
@@ -27,48 +28,90 @@ export function SiteHeader() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const isActive = (href: string) => href === "/projects" && pathname.startsWith("/projects");
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Scrollspy for homepage sections: the section crossing the upper third of the screen is "current".
+  useEffect(() => {
+    if (pathname !== "/") return;
+    const els = sectionIds.map((id) => document.getElementById(id)?.closest("section")).filter((el): el is HTMLElement => Boolean(el));
+    if (!els.length) return;
+    const inView = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? inView.add(e.target) : inView.delete(e.target)));
+        // Last section (in document order) crossing the band wins; none means we're above them.
+        const currentEl = els.filter((el) => inView.has(el)).pop();
+        setSection(currentEl?.querySelector("h2")?.id ?? null);
+      },
+      { rootMargin: "-30% 0px -60% 0px" },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const current = (href: string): "page" | "location" | undefined => {
+    if (href === "/projects" && pathname.startsWith("/projects")) return "page";
+    const id = href.split("#")[1];
+    if (pathname === "/" && id && id === section) return "location";
+    return undefined;
+  };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md">
+    <header
+      data-scrolled={scrolled || undefined}
+      className="sticky top-0 z-40 border-b border-transparent bg-bg/70 backdrop-blur-md transition-[border-color,background-color,box-shadow] duration-300 data-[scrolled]:border-line data-[scrolled]:bg-bg/85 data-[scrolled]:shadow-[0_8px_24px_-18px_rgb(0_0_0/0.35)]"
+    >
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2 focus:text-sm"
       >
         Skip to content
       </a>
-      <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-5 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between gap-4 px-5 sm:px-8">
         <Link href="/" className="group flex items-center gap-3" aria-label={`${profile.name}, home`}>
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-ink font-mono text-[0.78rem] font-medium text-bg">
+          <span className="grid h-8 w-8 place-items-center rounded-md bg-ink font-mono text-[0.78rem] font-medium text-bg transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
             AE
           </span>
           <span className="hidden text-[0.95rem] font-medium tracking-tight text-ink sm:block">{profile.name}</span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={isActive(item.href) ? "page" : undefined}
-              className="rounded-md px-3 py-2 text-sm text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink aria-[current=page]:text-ink aria-[current=page]:underline aria-[current=page]:decoration-accent aria-[current=page]:underline-offset-8"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav aria-label="Main" className="hidden items-center gap-0.5 md:flex">
+          {nav.map((item) => {
+            const state = current(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={state}
+                data-active={state ? "" : undefined}
+                className="group relative rounded-md px-3 py-2 text-sm text-ink-2 transition-colors hover:text-ink data-[active]:text-ink"
+              >
+                {item.label}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-3 -bottom-px h-[2px] origin-left scale-x-0 rounded-full bg-accent transition-transform duration-300 group-hover:scale-x-50 group-data-[active]:scale-x-100"
+                />
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center gap-1">
+          <CommandPalette items={commands} email={profile.email} />
           <a
             href={profile.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-1 inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
+            className="ml-1 hidden h-9 w-9 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink md:inline-flex"
             aria-label="GitHub profile (opens in a new tab)"
           >
             <GitHubMark className="h-[18px] w-[18px]" />
           </a>
-          <ThemeToggle />
-        </nav>
-
-        <div className="flex items-center gap-1 md:hidden">
           <ThemeToggle />
           <button
             type="button"
@@ -76,7 +119,7 @@ export function SiteHeader() {
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpenFor(open ? null : pathname)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink transition-colors hover:bg-surface-2"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink transition-colors hover:bg-surface-2 md:hidden"
           >
             {open ? <Close className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -84,26 +127,26 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <nav id="mobile-menu" aria-label="Main" className="border-t border-line bg-bg md:hidden">
+        <nav id="mobile-menu" aria-label="Main" className="animate-drop-in border-t border-line bg-bg shadow-card md:hidden">
           <ul className="mx-auto flex max-w-[1180px] flex-col px-5 py-3">
-            {nav.map((item) => (
-              <li key={item.href}>
+            {nav.map((item, i) => (
+              <li key={item.href} className="animate-drop-in" style={{ animationDelay: `${i * 40}ms` }}>
                 <Link
                   href={item.href}
                   onClick={() => setOpenFor(null)}
-                  className="block border-b border-line py-3 text-base text-ink last:border-b-0"
+                  aria-current={current(item.href)}
+                  data-active={current(item.href) ? "" : undefined}
+                  className="flex items-center justify-between border-b border-line py-3.5 text-base text-ink data-[active]:text-accent"
                 >
                   {item.label}
+                  <span aria-hidden="true" className="font-mono text-xs text-ink-3">
+                    0{i + 1}
+                  </span>
                 </Link>
               </li>
             ))}
             <li>
-              <a
-                href={profile.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 py-3 text-base text-ink"
-              >
+              <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-3.5 text-base text-ink">
                 <GitHubMark className="h-4 w-4" /> GitHub
                 <span className="sr-only">(opens in a new tab)</span>
               </a>

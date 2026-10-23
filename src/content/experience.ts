@@ -1,7 +1,8 @@
 /**
- * Work experience, education, certifications and languages.
- * Source of truth: the CV. Keep entries newest first.
+ * Work experience, education, certifications, recognition and languages.
+ * Source of truth: the CV (and the award certificates). Keep entries newest first.
  */
+import type { Recognition } from "./types";
 
 export interface ExperienceEntry {
   role: string;
@@ -66,6 +67,60 @@ export const certifications = [
   { name: "IBM RAG and Agentic AI Professional Certificate", issuer: "IBM · Coursera", year: "2026" },
   { name: "AWS Academy Cloud Foundations", issuer: "Amazon Web Services", year: "2025" },
   { name: "Meta Android Developer", issuer: "Meta · Coursera", year: "2024" },
+];
+
+/**
+ * Awards and distinctions for the homepage "Recognition" list, in the order
+ * they should appear (most significant first).
+ * `project` links the entry to a case study (must be a slug from projects.ts).
+ */
+export const recognition: Recognition[] = [
+  {
+    title: "Best Project — entire 2A cohort",
+    detail: "ESPRIT Bal des Projets · awarded across the whole second-year cohort (≈40 classes, 1,200+ students) · team MAYOC",
+    year: "2022",
+    project: "visse-a-vis-erp",
+    image: {
+      src: "/projects/visse-a-vis-erp/award-certificate.webp",
+      width: 800,
+      height: 503,
+      alt: "ESPRIT Bal des Projets 2022 certificate: Meilleur Projet 2A, awarded to team MAYOC.",
+    },
+  },
+  {
+    title: "Best Student Project — Outstanding Performance",
+    detail: "MedTech Project Day · awarded for our AI-powered detection tool for colorectal cancer",
+    year: "2025",
+    project: "microbiome-colorectal-cancer",
+    image: {
+      src: "/projects/microbiome-colorectal-cancer/best-student-project-award.webp",
+      width: 800,
+      height: 1189,
+      alt: "Achref Elarbi and teammates holding Best Student Project certificates beside a 'Colorectal Cancer AI Detection' Project Day poster.",
+      position: "50% 46%",
+    },
+  },
+  {
+    title: "Best University Project of the Year",
+    detail: "Distinction · Mediterranean Institute of Technology (MedTech)",
+  },
+  {
+    title: "Capstone graded A",
+    detail: "AURA industry capstone with FAIRBANK, Lisbon (30 ECTS) · MedTech",
+    year: "2026",
+    project: "aura-ecosystem",
+  },
+  {
+    title: "Second Prize",
+    detail: "PawPaw pet-matchmaking app · academic project",
+    year: "2024",
+    project: "pawpaw",
+  },
+  {
+    title: "Dean's List",
+    detail: "Fall 2024 and Spring 2026 · MedTech",
+    year: "2024–2026",
+  },
 ];
 
 export const languages = [

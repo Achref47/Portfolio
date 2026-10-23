@@ -95,8 +95,8 @@ html {
   scroll-padding-top: 5rem;
 }
 
+/* The page colour lives on <html> so the grain layer below can sit between it and the content. */
 body {
-  background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
@@ -121,9 +121,265 @@ body {
   background-size: 28px 28px;
 }
 
+/* Very faint paper grain over the page background (decorative, non-interactive). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 /* Long-form text inside case studies. */
 .prose-body p + p {
   margin-top: 1rem;
+}
+
+/* Text link with an underline that grows on hover. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease;
+}
+.link-underline:hover,
+.link-underline:focus-visible {
+  background-size: 100% 1px;
+}
+
+/*
+ * Scroll reveal, as progressive enhancement: elements are only hidden once
+ * the RevealOnScroll component has added `reveal-ready` to <html>, so the page
+ * is fully visible without JavaScript. `--reveal-i` staggers siblings.
+ */
+.reveal-ready [data-reveal]:not([data-revealed]) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.reveal-ready [data-reveal] {
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 70ms);
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-drop-in {
+  animation: drop-in 0.18s ease-out backwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out backwards;
+}
+
+/* ── Motion & interaction system ─────────────────────────────────────────── */
+
+/*
+ * Page enter (app/template.tsx). Transform-led so content is never invisible.
+ * "backwards" fill: nothing is left on the element afterwards, so it does not
+ * become a containing block for position: fixed descendants (progress bar).
+ */
+@keyframes page-in {
+  from {
+    opacity: 0.4;
+    transform: translateY(8px);
+  }
+}
+.animate-page-in {
+  animation: page-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+/* Word-by-word rise for display headings: <span class="word-reveal"><span><span style="--w:0">…</span></span></span> */
+@keyframes word-up {
+  from {
+    transform: translateY(108%);
+  }
+}
+.word-reveal > span {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.word-reveal > span > span {
+  display: inline-block;
+  animation: word-up 0.9s cubic-bezier(0.2, 0.75, 0.15, 1) backwards;
+  animation-delay: calc(var(--w, 0) * 90ms + 80ms);
+}
+
+/* Lines that type in, one after another (hero terminal). */
+@keyframes line-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.line-in {
+  animation: line-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: calc(var(--l, 0) * 120ms + 250ms);
+}
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: caret 1.05s steps(1) infinite;
+}
+
+/* Rotating word in the hero headline. */
+@keyframes rotate-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em);
+    filter: blur(4px);
+  }
+}
+.rotate-in {
+  display: inline-block;
+  animation: rotate-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+/* Infinite technology strip. The track holds the list twice. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+/*
+ * Cursor spotlight. PointerEffects sets --mx/--my on the hovered
+ * [data-spotlight] element; the glow sits between its background and content.
+ */
+[data-spotlight] {
+  isolation: isolate;
+}
+[data-spotlight]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    520px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, var(--accent) 14%, transparent),
+    transparent 42%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+[data-spotlight]:hover::before {
+  opacity: 1;
+}
+
+/* Hero backdrop: an engineering grid lit around the cursor. */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(560px circle at var(--mx, 72%) var(--my, 38%), black, transparent 70%);
+  transition: mask-position 0.2s;
+}
+
+/* 3D tilt for screenshot frames (driven by HoverTilt). */
+.tilt-target {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.tilt-active .tilt-target {
+  transition-duration: 0.12s;
+}
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(600px circle at var(--gx, 50%) var(--gy, 0%), rgb(255 255 255 / 0.16), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tilt-active .tilt-glare {
+  opacity: 1;
+}
+
+/* "Open to work" status dot. */
+@keyframes ping-soft {
+  75%,
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+.status-ping {
+  animation: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Sequenced architecture steps: the connector draws, then the step rises. */
+.reveal-ready [data-reveal] .flow-line {
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 110ms + 200ms);
+}
+.reveal-ready [data-revealed] .flow-line {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+  .caret::after,
+  .status-ping {
+    animation: none !important;
+  }
+  .tilt-target {
+    transform: none !important;
+  }
+  .reveal-ready [data-reveal] .flow-line {
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -136,5 +392,10 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .reveal-ready [data-reveal]:not([data-revealed]) {
+    opacity: 1;
+    transform: none;
   }
 }

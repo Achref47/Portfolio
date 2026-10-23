@@ -5,10 +5,34 @@
 export const profile = {
   name: "Achref Elarbi",
   role: "Software Engineer · Full-Stack, Machine Learning & Data",
-  /** Big headline on the homepage. */
-  headline: "I build complete software products — from data pipelines and models to the APIs and interfaces people use.",
+  /** One line under the name in the hero. */
+  headline: "Software engineering graduate building full-stack products, machine-learning systems and data tools — and checking that they work.",
+  /**
+   * Animated version of the headline: `lead` + one rotating `focus` phrase,
+   * then `tail` on its own line. Screen readers and search engines get
+   * `headline` above instead.
+   */
+  headlineRotation: {
+    lead: "I build, end to end,",
+    focus: ["full-stack products.", "machine-learning systems.", "LLM applications.", "data tools."],
+    tail: "And I check that they work.",
+  },
+  /**
+   * Profile photo (square; shown as a circle). Use a square image of at least
+   * ~300 px — it is displayed small (hero avatar, about byline, link preview).
+   * Set to null to hide it everywhere.
+   */
+  photo: {
+    src: "/profile/achref-elarbi.webp",
+    width: 468,
+    height: 468,
+    alt: "Portrait of Achref Elarbi",
+  } as { src: string; width: number; height: number; alt: string } | null,
+  /** Short status shown next to the green dot in the hero. */
+  status: "Open to work · 2026 graduate",
+  /** Two or three sentences under the headline. */
   intro:
-    "Software engineering graduate based in Tunis. I combine full-stack development (React, TypeScript, Node.js, FastAPI, Django) with data science and machine learning (Python, PyTorch, LightGBM, LLMs). Most recently I was the sole engineer of AURA, an industry capstone with FAIRBANK in Lisbon that turned 1.25M property records into validated valuation models, an LLM analytics assistant and an executive intelligence hub.",
+    "I finished my engineering degree at MedTech in Tunis in 2026. For my capstone I was the sole engineer of AURA, an industry project with FAIRBANK in Lisbon: a property-valuation platform, a local LLM assistant and an executive dashboard built on 1.25M property records.",
   location: "Tunis, Tunisia",
   timezone: "UTC+1",
   availability: "Open to relocation and remote work",

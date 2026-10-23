@@ -15,8 +15,9 @@
     "typecheck": "next typegen && tsc --noEmit",
     "validate": "node scripts/validate-content.ts",
     "image": "node scripts/add-image.mjs",
-    "check": "npm run validate && npm run lint && npm run typecheck && npm run build",
-    "og": "node scripts/make-og-image.ts"
+    "check": "npm run validate && npm test && npm run lint && npm run typecheck && npm run build",
+    "og": "node scripts/make-og-image.ts",
+    "test": "node --test \"scripts/*.test.ts\""
   },
   "dependencies": {
     "next": "16.4.3",

@@ -33,6 +33,27 @@ export const ArrowRight = (p: IconProps) => (
     <path d="M5 12h14M13 6l6 6-6 6" />
   </Icon>
 );
+export const ArrowUp = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 19V5M6 11l6-6 6 6" />
+  </Icon>
+);
+export const Command = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M9 6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3z" />
+  </Icon>
+);
+export const Terminal = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m5 8 4 4-4 4M12 16h7" />
+  </Icon>
+);
+export const Layers = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m12 3 9 5-9 5-9-5z" />
+    <path d="m3 13 9 5 9-5" />
+  </Icon>
+);
 export const ArrowLeft = (p: IconProps) => (
   <Icon {...p}>
     <path d="M19 12H5M11 18l-6-6 6-6" />
