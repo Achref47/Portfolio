@@ -178,21 +178,9 @@ and `docs`. A project with nothing public gets an `availabilityNote` instead.
 
 <br />
 
-## ☁️ Deploying to Vercel
+## ☁️ Vercel 
 
-No environment variables or secrets are required.
-
-1. Push this repository to GitHub.
-2. On [vercel.com/new](https://vercel.com/new), import it. Keep the defaults (framework
-   **Next.js**, build `npm run build`, Root Directory `./`) and deploy.
-3. Every push to `main` deploys to production; other branches get preview URLs.
-4. *(Optional)* Add a custom domain and set `NEXT_PUBLIC_SITE_URL=https://your-domain.com` so
-   canonical links, the sitemap and `robots.txt` use it.
-
-The content validator runs inside the Vercel build, so a broken image path or link fails the
-deployment instead of going live.
-
-<br />
+Link : https://myportfolio-delta-sepia-55.vercel.app/
 
 ## 🎨 Design & engineering notes
 
