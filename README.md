@@ -2,9 +2,12 @@
 
 <img src="public/profile/achref-elarbi.webp" alt="Achref Elarbi" width="112" height="112" />
 
-# Achref Elarbi — Software Engineer | Data Science | Machine Learning & Full-Stack Applications Portfolio
+# Achref Elarbi — Software Engineer Portfolio
 
-**A fast, accessible, content-driven portfolio and project catalogue.**<br />
+### Machine Learning · LLM Applications · Data Science · Full-Stack
+
+**I build machine-learning systems, LLM applications and data products — and the full-stack software around them.**<br />
+This is my portfolio: a fast, accessible, content-driven catalogue of that work.<br />
 Every page is generated from typed data files — add a project by editing one file.
 
 <br />
@@ -14,6 +17,17 @@ Every page is generated from typed data files — add a project by editing one f
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/new)
+
+<sub>**AI / ML & data**</sub><br />
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white)
+![LightGBM](https://img.shields.io/badge/LightGBM-02A04B?style=flat-square)
+![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=langchain&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-000000?style=flat-square&logo=ollama&logoColor=white)
+![RAG](https://img.shields.io/badge/RAG_%26_Text--to--SQL-4fd1ae?style=flat-square)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
 
 [![GitHub](https://img.shields.io/badge/GitHub-Achref47-181717?style=flat-square&logo=github)](https://github.com/Achref47)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Achref_Elarbi-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/achref-elarbi-9a44b9298/)
@@ -25,6 +39,17 @@ Every page is generated from typed data files — add a project by editing one f
 <img src="docs/screenshots/home-light.webp" alt="Homepage in light mode: animated hero with a terminal of verified project results" width="860" />
 
 </div>
+
+<br />
+
+## 🧠 What this portfolio shows
+
+| Area | Skills | Where to see it |
+|---|---|---|
+| **Machine learning** | Gradient boosting (LightGBM, CatBoost), PyTorch Transformers, scikit-learn, SHAP explainability, conformal prediction | AURA valuation models · ECG arrhythmia analysis |
+| **LLM applications** | RAG, text-to-SQL, AI agents, local LLMs (Ollama), Gemini API, LangChain, ChromaDB, MCP | AURA AI assistant · IBM RAG & agentic-AI labs |
+| **Data science** | pandas, Polars, NumPy/SciPy, SQL, DuckDB, data fusion and feature engineering, honest evaluation | AURA data foundation · microbiome study · NYC forecasting |
+| **Full-stack** | React, TypeScript, Node/Express, FastAPI, Django REST, React Native, auth, CI | Fuel Planner API · TaskFlow AI · Privilege Travel Platform |
 
 <br />
 
