@@ -1,260 +1,204 @@
-# Achref Elarbi — Portfolio
+<div align="center">
 
-Personal portfolio and project catalogue, built with **Next.js 16 (App Router)**, **TypeScript** and
-**Tailwind CSS 4**. Every page is generated at build time from typed content files — no database,
-no API key, no environment variable required.
+<img src="public/profile/achref-elarbi.webp" alt="Achref Elarbi" width="112" height="112" />
 
-- `/` — animated hero with a "terminal" of verified results, featured work, recognition, experience, an interactive full-stack map, about, contact
-- `/projects` — the catalogue: search, area and "can open" filters, sorting; filters live in the URL (`/projects?q=react&area=ai-ml&has=live`) so every view is shareable
-- `/projects/<slug>` — a case study for every project with `details`: sticky section navigation, reading progress, animated architecture, related projects
-- Everywhere: command palette (**Ctrl/⌘ + K** or **/**) to jump to any project, section, profile or action
+# Achref Elarbi — Developer Portfolio
 
-See `PORTFOLIO_AUDIT.md` for the design and content review behind the current version.
+**A fast, accessible, content-driven portfolio and project catalogue.**<br />
+Every page is generated from typed data files — add a project by editing one file.
 
----
+<br />
 
-## Quick start
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19-149ECA?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/new)
 
-Requires **Node.js 24** (any version ≥ 22.18 works locally).
+[![GitHub](https://img.shields.io/badge/GitHub-Achref47-181717?style=flat-square&logo=github)](https://github.com/Achref47)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Achref_Elarbi-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/achref-elarbi-9a44b9298/)
+![Content checks](https://img.shields.io/badge/content_checks-validated_on_every_build-4fd1ae?style=flat-square)
+![Accessibility](https://img.shields.io/badge/a11y-reduced--motion_%26_keyboard_friendly-4fd1ae?style=flat-square)
+
+<br />
+
+<img src="docs/screenshots/home-light.webp" alt="Homepage in light mode: animated hero with a terminal of verified project results" width="860" />
+
+</div>
+
+<br />
+
+## ✨ Highlights
+
+|   |   |
+|---|---|
+| 🎯 **Recruiter-first homepage** | A hero that answers *who, what, and proof* in seconds — a "terminal" of verified results that link to their case studies. |
+| 📚 **Honest project catalogue** | 12 projects with search, area filters and "can open" filters (live demo · video · source · docs). Filters live in the URL, so every view is shareable. |
+| 🧩 **Case studies, not just cards** | Problem → solution → architecture → decisions → results → limitations, with a sticky section nav and reading progress. |
+| ⌨️ **Command palette** | <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> (or <kbd>/</kbd>) jumps to any project, section, profile or action. |
+| 🎬 **Tasteful motion** | CSS-first: word-reveal headline, typed terminal, count-up metrics, cursor spotlight, 3D tilt, scroll reveals. Zero animation libraries; fully off under `prefers-reduced-motion`. |
+| 🌗 **Light & dark** | System default, header toggle, remembered per visitor, no flash on load. |
+| 🔍 **SEO-ready** | Per-page metadata, Open Graph image, JSON-LD `Person`, sitemap and robots, canonical URLs. |
+| 🛡️ **Can't ship a broken link** | A content validator runs before every build (and every Vercel deploy): slugs, links, images and their sizes, alt text, references. |
+
+<br />
+
+## 🖼️ Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/home-dark.webp" alt="Homepage in dark mode" /><br /><sub><b>Dark mode</b> — theme follows the system and is remembered.</sub></td>
+    <td width="50%"><img src="docs/screenshots/projects.webp" alt="Project catalogue with search and filters" /><br /><sub><b>Catalogue</b> — search, area and evidence filters, sorting.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/case-study.webp" alt="Case study page for the AURA ecosystem" /><br /><sub><b>Case study</b> — facts, evidence links, problem / built / outcome.</sub></td>
+    <td width="50%" align="center"><img src="docs/screenshots/mobile.webp" alt="Homepage on a phone" width="260" /><br /><sub><b>Mobile</b> — no horizontal scroll on any page.</sub></td>
+  </tr>
+</table>
+
+<br />
+
+## 🧱 Tech stack
+
+| Layer | Choice |
+|---|---|
+| **Framework** | Next.js 16 (App Router, Turbopack, static generation with `generateStaticParams`) |
+| **UI** | React 19, Tailwind CSS 4 (design tokens via `@theme`), no component or animation library |
+| **Language** | TypeScript, strict; typed content models |
+| **Fonts** | Instrument Serif, IBM Plex Sans, IBM Plex Mono via `next/font` (self-hosted) |
+| **Images** | `next/image` + WebP; `sharp`-based optimiser script |
+| **Quality** | Content validator, Node test runner (9 tests), ESLint, `tsc` |
+| **Hosting** | Vercel (static output — no server, database or secrets) |
+
+<br />
+
+## 🚀 Quick start
+
+Requires **Node.js 24** (≥ 22.18 works locally).
 
 ```bash
+git clone https://github.com/Achref47/Portfolio.git
+cd Portfolio
 npm install
-npm run dev          # http://localhost:3000, reloads on save
+npm run dev        # http://localhost:3000
 ```
 
 | Command | What it does |
 |---|---|
-| `npm run dev` | Development server |
-| `npm run validate` | Checks the content (slugs, links, types, categories, images and their sizes, placeholders, featured/highlights/recognition references) |
-| `npm test` | Tests for the content rules, including a "new project" fixture |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | Generates route types and runs the TypeScript compiler |
-| `npm run build` | Runs `validate` automatically, then builds the production site |
-| `npm run start` | Serves the production build locally |
+| `npm run dev` | Development server with hot reload |
 | `npm run check` | validate → test → lint → typecheck → build. **Run before pushing.** |
-| `npm run image -- <file> <slug> [name] [options]` | Optimises a screenshot to WebP and prints the snippet to paste |
-| `npm run og` | Regenerates `public/og.png` (link preview) from your name and role |
+| `npm run validate` | Checks all content: links, slugs, images and sizes, alt text, references |
+| `npm test` | Tests for the content rules |
+| `npm run build` / `npm start` | Production build / serve it locally |
+| `npm run image -- <file> <slug> [name]` | Optimise a screenshot to WebP and print the snippet to paste |
+| `npm run og` | Regenerate the link-preview image (`public/og.png`) |
 
----
+<br />
 
-## Where everything lives
+## 🗂️ Project structure
 
 ```
-portfolio-site/
+.
 ├── src/
-│   ├── content/             ← EDIT THESE to change what the site says
-│   │   ├── profile.ts       name, headline, intro, about, email, links, resume switch
-│   │   ├── projects.ts      every project (order here = "Recommended" order on /projects)
-│   │   ├── site.ts          title, navigation, featured projects, hero "Selected results"
-│   │   ├── experience.ts    jobs, education, certifications, recognition (awards), languages
-│   │   ├── skills.ts        skill groups
-│   │   ├── categories.ts    filter areas and project-type labels
-│   │   └── types.ts         the shape of all of the above, documented field by field
-│   ├── app/                 pages, layout, sitemap, robots, favicon
-│   ├── components/          UI building blocks (cards, catalogue, gallery, players, header…)
-│   └── lib/content.ts       helpers that read the content (no project data here)
-├── public/projects/<slug>/  screenshots and posters, one folder per project
-└── scripts/                 validator, its tests, image optimiser, link-preview generator
+│   ├── content/            ← edit these to change what the site says
+│   │   ├── profile.ts        name, headline, intro, about, links, photo, résumé switch
+│   │   ├── projects.ts       every project (order = "Recommended" order)
+│   │   ├── site.ts           title, navigation, featured projects, hero results
+│   │   ├── experience.ts     jobs, education, certifications, awards
+│   │   ├── skills.ts         skill groups and the full-stack map
+│   │   ├── categories.ts     filter areas and project-type labels
+│   │   └── types.ts          the shape of all content, documented field by field
+│   ├── app/                pages, layout, sitemap, robots, favicon
+│   ├── components/         cards, catalogue, palette, gallery, players, header…
+│   └── lib/                helpers that read the content
+├── public/                 images, per-project screenshots, OG image
+├── scripts/                content validator + tests, image optimiser, OG generator
+└── docs/                   content guide and README screenshots
 ```
 
-**Rule of thumb:** to change *what* the site says, edit `src/content/`. To change *how* it looks,
-edit `src/components/` or `src/app/`. No project information is hard-coded in components.
+> **Rule of thumb:** to change *what* the site says, edit `src/content/`. To change *how* it
+> looks, edit `src/components/` or `src/app/`. No project data is hard-coded in components.
 
----
+<br />
 
-## Managing projects
+## ➕ Adding a project
 
-All projects live in the `projects` array in `src/content/projects.ts`; `src/content/types.ts`
-documents every field. Required: `slug`, `title`, `tagline`, `summary`, `year`, `type`, `context`,
-`role`, `categories`, `tech`, `resources`. Everything else is optional — a project with only a
-GitHub link, only a video, or nothing public at all is shown correctly.
-
-### Add a project
-
-1. **Optimise screenshots** (once per image):
-
-   ```bash
-   npm run image -- "C:\path\to\screenshot.png" my-new-project dashboard
-   ```
-
-   Writes `public/projects/my-new-project/dashboard.webp` and prints a line with the right width
-   and height. Options: `--crop-top=80` (browser tabs), `--crop-bottom=48` (taskbar),
-   `--max-width=500` (phone screenshots), `--rotate=90|180|270` (sideways photos).
-   **Check every image for personal data** (e-mails, phone numbers, names, other people's photos)
-   before publishing. Replace the printed `alt` placeholder — the validator rejects it.
-
-2. **Add an entry** where it should appear in the catalogue:
+1. Optimise a screenshot: `npm run image -- "path/to/shot.png" my-project dashboard`
+2. Add one entry to the `projects` array in `src/content/projects.ts`:
 
    ```ts
    {
-     slug: "my-new-project",                  // URL: /projects/my-new-project
-     title: "My New Project",
-     shortTitle: "My Project",                // optional, for tight spaces
+     slug: "my-project",
+     title: "My Project",
      tagline: "One sentence that says what it does.",
      summary: "Two or three sentences for cards and search.",
      year: "2026",
-     type: "independent",                     // industry | internship | independent | assessment | academic | coursework
+     type: "independent",
      context: "Personal project",
      role: "Sole developer",
-     team: "Two-person team: … ",             // optional — only if documented
-     award: "…",                              // optional — only if documented
-     categories: ["software", "ai-ml"],       // ids from categories.ts
-     tech: ["React", "FastAPI", "PostgreSQL"],
-     resources: [
-       { kind: "source", label: "Source code", href: "https://github.com/Achref47/my-new-project" },
-       { kind: "live",   label: "Live app",    href: "https://my-new-project.vercel.app" },
-       { kind: "video",  label: "Demo video",  href: "https://www.youtube.com/watch?v=VIDEO_ID" },
-     ],
-     cover: { type: "image", src: "/projects/my-new-project/dashboard.webp", width: 1600, height: 900,
-              alt: "Dashboard showing …" },   // add fit: "contain" for charts
-     media: [
-       { type: "youtube", videoId: "VIDEO_ID", title: "My New Project — demo",
-         poster: "/projects/my-new-project/dashboard.webp" },
-     ],
-     metrics: [{ value: "120 ms", label: "median API latency", context: "load test, 1k requests" }],
-     details: {                               // optional: remove to skip the case-study page
-       glance: { problem: "…", built: "…", outcome: "…" },
-       overview: ["What it is and why it exists."],
-       problem: ["…"], objectives: ["…"], solution: ["…"], contribution: ["…"],
-       architecture: { steps: [{ title: "Frontend", detail: "…" }, { title: "API", detail: "…" }] },
-       decisions: ["…"], challenges: ["…"],
-       codeSample: { title: "A real request", language: "bash", code: "curl …", caption: "…" },
-       results: ["A measured, verifiable result."], limitations: ["…"], learnings: ["…"],
-     },
-     related: ["fuel-planner-api"],           // optional; otherwise picked automatically
+     categories: ["software"],
+     tech: ["React", "FastAPI"],
+     resources: [{ kind: "source", label: "Source code", href: "https://github.com/Achref47/my-project" }],
    },
    ```
 
-3. `npm run check`, look at it with `npm run dev`, commit and push. It appears automatically in
-   the catalogue, filters, search, sitemap and related-project suggestions.
+3. `npm run check`, commit, push. It appears in the catalogue, filters, search, sitemap,
+   command palette and related-project suggestions automatically.
 
-**Resource kinds — use the one that matches reality:**
+Resource kinds are strict so the site never overclaims: `source`, `live` (never a video), `video`
+and `docs`. A project with nothing public gets an `availabilityNote` instead.
 
-| kind | Use for | Shown as |
-|---|---|---|
-| `source` | A repository a visitor can open | Source Code |
-| `live` | A running app or API — **never a video** | Live Demo |
-| `video` | A recorded demo | Video Demo |
-| `docs` | Reports, write-ups, documentation | Documentation |
+📖 **Full guide** — editing, removing, reordering, featuring, metrics, media, profile and résumé:
+[`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md)
 
-If nothing is public, leave `resources: []` and add an `availabilityNote` (for example
-`"Company project: source code is not public."`). Put caveats in a resource's `note`
-(e.g. "free tier — may take a minute to wake").
+<br />
 
-**Metrics:** only numbers you can point to in a report, test run or notebook. Use `context` to
-say how it was measured (test set vs validation, pilot study, internship report…).
+## ☁️ Deploying to Vercel
 
-**Media types:** `image` (screenshots, figures), `youtube` (click-to-play; nothing loads from
-YouTube until clicked), `video` (a small MP4 in `public/`, under ~25 MB — prefer YouTube for long
-videos). The first video becomes the case-study hero; without a video the cover is used.
+No environment variables or secrets are required.
 
-### Edit, remove, reorder, feature
-
-| Task | How |
-|---|---|
-| Edit | Change the fields in `projects.ts`. Changing `slug` changes the URL. |
-| Remove | Delete the object, remove its slug from `site.featured`, `site.highlights`, `recognition` and any `related` lists, delete `public/projects/<slug>/`. The validator lists anything still pointing at it. |
-| Reorder the catalogue | Move the object in the array (card numbers 01, 02… follow it). |
-| Feature on the homepage | Add the slug to `site.featured` in `site.ts`, in the order you want. The first is the large flagship card; the rest alternate left/right. Four to six reads best. |
-| Change the hero numbers | Edit `site.highlights`: `{ project: "slug", metric: 0 }` points at a project's metric, so numbers are written once. |
-| Add an award | Add an entry to `recognition` in `experience.ts` (link it with `project: "slug"`). |
-| New filter area | Add it to `categories.ts` and its id to `CategoryId` in `types.ts`. Empty areas are hidden. |
-| New project type | Add it to `projectTypes` in `categories.ts` and to `ProjectType` in `types.ts`. |
-
-### Working with Claude
-
-When you finish a project, give Claude the README, repository, screenshots, demo link and any
-report, and ask it to add the project. The expected workflow is:
-
-1. Inspect the material and separate verified facts from claims (README text is a claim; code,
-   test output and reports are evidence).
-2. Optimise screenshots with `npm run image` and check them for personal data.
-3. Add a typed entry to `projects.ts` (and `details` if there is enough for a case study).
-4. Use the correct resource kinds; add an `availabilityNote` for anything private.
-5. Run `npm run check` and look at the page with `npm run dev`.
-6. Feature it only if you ask — by adding the slug to `site.featured`.
-
----
-
-## Updating your profile
-
-| To change… | Edit |
-|---|---|
-| Name, headline, intro, location, availability, target roles | `src/content/profile.ts` |
-| About paragraphs | `profile.about` |
-| Email, GitHub, LinkedIn, YouTube | `profile.email`, `profile.links` |
-| Jobs, education, certifications, languages, awards | `src/content/experience.ts` |
-| Skills | `src/content/skills.ts` |
-| Navigation, browser title, search description | `src/content/site.ts` |
-| Hero status pill ("Open to work · …") | `profile.status` |
-| Profile photo (hero avatar, About byline, link preview) | `profile.photo` → a square image in `public/profile/`; set `null` to hide. Run `npm run og` afterwards to refresh the link preview |
-| Rotating hero headline | `profile.headlineRotation` (`lead`, `focus` phrases, `tail`) — keep `profile.headline` as the plain sentence for screen readers and search |
-| Hero "terminal" numbers | `site.highlights` (points at project metrics) |
-| Full-stack section | layers and their one-line `blurb` in `skills.ts`; side text in `stackIntro` |
-| Award with an evidence image | `image` on a `recognition` entry (the first entry is shown large) |
-| Link-preview image | `npm run og` after changing name/role |
-
-### Resume download
-Built in but **off** (the current CV contains a phone number). To enable it with a public version:
-
-1. Save the CV as `public/Achref-Elarbi-Resume.pdf`.
-2. Set `resume.enabled: true` in `src/content/profile.ts`.
-3. `npm run check`, commit, push.
-
-A "Resume (PDF)" button then appears in the hero. To update the CV later, replace the file (same
-name). The validator fails the build if `enabled` is `true` and the file is missing.
-
----
-
-## Deploying to Vercel
-
-No environment variables or secrets are needed.
-
-### First deployment
-1. **Push this folder as its own repository** — only `portfolio-site/`, never the parent folder
-   (it contains private AURA code, recordings with personal data and internal reports).
-   ```bash
-   git remote add origin https://github.com/Achref47/portfolio.git
-   git push -u origin main
-   ```
-2. On <https://vercel.com/new>, **Import** the repository. Keep the defaults (framework Next.js,
-   build `npm run build`, **Root Directory `./`**) and deploy.
+1. Push this repository to GitHub.
+2. On [vercel.com/new](https://vercel.com/new), import it. Keep the defaults (framework
+   **Next.js**, build `npm run build`, Root Directory `./`) and deploy.
 3. Every push to `main` deploys to production; other branches get preview URLs.
+4. *(Optional)* Add a custom domain and set `NEXT_PUBLIC_SITE_URL=https://your-domain.com` so
+   canonical links, the sitemap and `robots.txt` use it.
 
-If the site ever lives in a subfolder of a larger repository, set *Project → Settings → General →
-Root Directory* to that folder (e.g. `portfolio-site`).
+The content validator runs inside the Vercel build, so a broken image path or link fails the
+deployment instead of going live.
 
-### Custom domain (optional)
-Add it under *Project → Settings → Domains* and set `NEXT_PUBLIC_SITE_URL=https://your-domain.com`
-so canonical links, the sitemap and robots.txt use it. Otherwise Vercel's production URL is used.
+<br />
 
-### Updating the live site
-Edit content → `npm run check` → commit → push. The validator runs inside the Vercel build, so a
-broken image path or link fails the deployment instead of going live.
+## 🎨 Design & engineering notes
 
----
+- **Identity:** an "engineer's notebook" — warm paper background with faint grain, ink text, one
+  green accent. Serif for names and titles, sans for text, mono for metadata and numbers.
+- **Progressive enhancement:** content is in the HTML and readable without JavaScript;
+  `prefers-reduced-motion` turns motion off.
+- **Accessibility:** landmarks, skip link, one `<h1>` per page, labelled controls, visible focus
+  rings, keyboard-operable menu, filters, palette and image viewer, alt text enforced by the
+  validator.
+- **Performance:** static HTML, WebP via `next/image`, YouTube embeds load only on click.
+- **Honesty by design:** each project states what is publicly available and what is not; metrics
+  must carry the context in which they were measured. See
+  [`PORTFOLIO_AUDIT.md`](PORTFOLIO_AUDIT.md) for the review behind the current version.
 
-## What updates automatically
+<br />
 
-Because every interface element reads from `src/content`, adding or editing a project updates —
-with no UI work — the catalogue and its filter counts, search, the sitemap, related-project
-suggestions, the command palette, the skill counts in the full-stack section (matched against
-each project's `tech`), and, if featured, the homepage.
+## 🔒 Privacy
 
-## Design notes
+The portfolio repository contains only the website. The AURA product repositories are private
+and are intentionally **not** linked or published here; their case study describes them without
+exposing source code. Résumé download is off by default because the current CV contains a phone
+number.
 
-- "Engineer's notebook" identity: warm paper background with faint grain, ink text, one green
-  accent; Instrument Serif for names and section titles, IBM Plex Sans for text, IBM Plex Mono for
-  metadata and numbers (all self-hosted by `next/font`).
-- Light and dark themes (system default, header toggle, remembered per visitor, no flash).
-- Motion system (CSS-first, no animation library): word-by-word name reveal, typed-in terminal
-  lines, rotating focus phrase, scroll-reveal sections with staggering, count-up metrics, cursor
-  spotlight on cards, 3D tilt and glare on featured screenshots, sliding nav underline, page-enter
-  transition, sequential architecture diagrams. Everything is progressive enhancement: content is
-  in the HTML and visible without JavaScript, and `prefers-reduced-motion` turns motion off.
-- Interaction: command palette (Ctrl/⌘ + K), scroll-aware header with section highlighting, sticky
-  "On this page" bar and reading progress on case studies, back-to-top button, URL-synced filters.
-- Accessibility: landmarks, skip link, one `<h1>` per page, labelled controls, visible focus
-  (including a ring around focused cards), keyboard-operable menu, filters and image viewer, alt
-  text required by the validator.
-- Performance: static HTML, WebP images through `next/image`, YouTube loaded on click.
+<br />
+
+<div align="center">
+
+**Achref Elarbi** · Software Engineer · Tunis, Tunisia<br />
+[GitHub](https://github.com/Achref47) · [LinkedIn](https://www.linkedin.com/in/achref-elarbi-9a44b9298/)
+
+<sub>Open to junior software engineering, full-stack, data science and AI/ML roles.</sub>
+
+</div>
