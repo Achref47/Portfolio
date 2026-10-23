@@ -2,7 +2,7 @@
 
 <img src="public/profile/achref-elarbi.webp" alt="Achref Elarbi" width="112" height="112" />
 
-# Achref Elarbi — Developer Portfolio
+# Achref Elarbi — Software Engineer | Data Science | Machine Learning & Full-Stack Applications Portfolio
 
 **A fast, accessible, content-driven portfolio and project catalogue.**<br />
 Every page is generated from typed data files — add a project by editing one file.
