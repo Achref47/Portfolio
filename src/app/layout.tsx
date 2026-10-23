@@ -46,10 +46,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f5f1" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d0f12" },
-  ],
+  themeColor: "#f6f5f1",
 };
 
 /** Structured data describing the site owner (schema.org Person), sanitised as the Next.js JSON-LD guide recommends. */

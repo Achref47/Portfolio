@@ -45,28 +45,6 @@
   color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0d0f12;
-    --surface: #14171b;
-    --surface-2: #1b1f24;
-    --ink: #ecebe6;
-    --ink-2: #c0c2c6;
-    --ink-3: #9a9ea5;
-    --line: #2a2f36;
-    --line-strong: #3a4049;
-    --accent: #4fd1ae;
-    --accent-ink: #062019;
-    --accent-soft: #10302a;
-    --live: #4fd1ae;
-    --video: #f2b766;
-    --docs: #9db4ff;
-    --source: #ecebe6;
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -16px rgb(0 0 0 / 0.6);
-    color-scheme: dark;
-  }
-}
-
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);

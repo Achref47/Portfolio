@@ -238,7 +238,7 @@ each project's `tech`), and, if featured, the homepage.
 - "Engineer's notebook" identity: warm paper background with faint grain, ink text, one green
   accent; Instrument Serif for names and section titles, IBM Plex Sans for text, IBM Plex Mono for
   metadata and numbers (all self-hosted by `next/font`).
-- Light and dark themes (system default, header toggle, remembered per visitor, no flash).
+- Light and dark themes (light by default regardless of system setting; header toggle switches to dark, remembered per visitor, no flash).
 - Motion system (CSS-first, no animation library): word-by-word name reveal, typed-in terminal
   lines, rotating focus phrase, scroll-reveal sections with staggering, count-up metrics, cursor
   spotlight on cards, 3D tilt and glare on featured screenshots, sliding nav underline, page-enter

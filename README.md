@@ -62,7 +62,7 @@ Every page is generated from typed data files — add a project by editing one f
 | 🧩 **Case studies, not just cards** | Problem → solution → architecture → decisions → results → limitations, with a sticky section nav and reading progress. |
 | ⌨️ **Command palette** | <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> (or <kbd>/</kbd>) jumps to any project, section, profile or action. |
 | 🎬 **Tasteful motion** | CSS-first: word-reveal headline, typed terminal, count-up metrics, cursor spotlight, 3D tilt, scroll reveals. Zero animation libraries; fully off under `prefers-reduced-motion`. |
-| 🌗 **Light & dark** | System default, header toggle, remembered per visitor, no flash on load. |
+| 🌗 **Light & dark** | Light by default for everyone; visitors can switch to dark with the header toggle (remembered, no flash on load). |
 | 🔍 **SEO-ready** | Per-page metadata, Open Graph image, JSON-LD `Person`, sitemap and robots, canonical URLs. |
 | 🛡️ **Can't ship a broken link** | A content validator runs before every build (and every Vercel deploy): slugs, links, images and their sizes, alt text, references. |
 
@@ -72,7 +72,7 @@ Every page is generated from typed data files — add a project by editing one f
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/screenshots/home-dark.webp" alt="Homepage in dark mode" /><br /><sub><b>Dark mode</b> — theme follows the system and is remembered.</sub></td>
+    <td width="50%"><img src="docs/screenshots/home-dark.webp" alt="Homepage in dark mode" /><br /><sub><b>Dark mode</b> — optional, via the header toggle; the site opens in light mode.</sub></td>
     <td width="50%"><img src="docs/screenshots/projects.webp" alt="Project catalogue with search and filters" /><br /><sub><b>Catalogue</b> — search, area and evidence filters, sorting.</sub></td>
   </tr>
   <tr>
