@@ -28,7 +28,7 @@ export const profile = {
     height: 468,
     alt: "Portrait of Achref Elarbi",
   } as { src: string; width: number; height: number; alt: string } | null,
-  /** Short status shown next to the green dot in the hero. */
+  /** Short status shown at the top of the hero. */
   status: "Open to work · 2026 graduate",
   /** Two or three sentences under the headline. */
   intro:

@@ -109,6 +109,8 @@ GitHub link, only a video, or nothing public at all is shown correctly.
        overview: ["What it is and why it exists."],
        problem: ["…"], objectives: ["…"], solution: ["…"], contribution: ["…"],
        architecture: { steps: [{ title: "Frontend", detail: "…" }, { title: "API", detail: "…" }] },
+       // A step may also carry `image` (a real screenshot) or `metric` (index into `metrics`);
+       // the flagship's homepage system diagram shows it when that stage is selected.
        decisions: ["…"], challenges: ["…"],
        codeSample: { title: "A real request", language: "bash", code: "curl …", caption: "…" },
        results: ["A measured, verifiable result."], limitations: ["…"], learnings: ["…"],
@@ -181,7 +183,7 @@ report, and ask it to add the project. The expected workflow is:
 | Hero status pill ("Open to work · …") | `profile.status` |
 | Profile photo (hero avatar, About byline, link preview) | `profile.photo` → a square image in `public/profile/`; set `null` to hide. Run `npm run og` afterwards to refresh the link preview |
 | Rotating hero headline | `profile.headlineRotation` (`lead`, `focus` phrases, `tail`) — keep `profile.headline` as the plain sentence for screen readers and search |
-| Hero "terminal" numbers | `site.highlights` (points at project metrics) |
+| Hero "verified results" numbers | `site.highlights` (points at project metrics) |
 | Full-stack section | layers and their one-line `blurb` in `skills.ts`; side text in `stackIntro` |
 | Award with an evidence image | `image` on a `recognition` entry (the first entry is shown large) |
 | Link-preview image | `npm run og` after changing name/role |
@@ -235,14 +237,17 @@ each project's `tech`), and, if featured, the homepage.
 
 ## Design notes
 
-- "Engineer's notebook" identity: warm paper background with faint grain, ink text, one green
-  accent; Instrument Serif for names and section titles, IBM Plex Sans for text, IBM Plex Mono for
-  metadata and numbers (all self-hosted by `next/font`).
+- Identity: near-black ink and one signal colour — cool white with signal red in light mode,
+  warm charcoal with coral in dark mode (tokens in `src/app/globals.css`). One variable typeface, Archivo,
+  self-hosted by `next/font`: `font-display` (125% width) for names, titles and big numbers,
+  `font-wide` (112%) for card titles, normal width for reading; `<Light>` inside a title gives the
+  light/bold contrast. Monospace only for code.
 - Light and dark themes (light by default regardless of system setting; header toggle switches to dark, remembered per visitor, no flash).
-- Motion system (CSS-first, no animation library): word-by-word name reveal, typed-in terminal
-  lines, rotating focus phrase, scroll-reveal sections with staggering, count-up metrics, cursor
-  spotlight on cards, 3D tilt and glare on featured screenshots, sliding nav underline, page-enter
-  transition, sequential architecture diagrams. Everything is progressive enhancement: content is
+- Motion system (CSS-first, no animation library): blur-in opening lines, word-by-word name
+  reveal, rotating focus phrase, a large type band, a paragraph whose words light up as it scrolls
+  (`ScrollWords`), the flagship's interactive system diagram with an automatic tour, a career line
+  that fills as you scroll (`ScrollScene`), shutter-reveal images (`data-reveal="clip"`), magnetic
+  buttons (`data-magnetic`), count-up metrics, sliding nav underline and page-enter transition. Everything is progressive enhancement: content is
   in the HTML and visible without JavaScript, and `prefers-reduced-motion` turns motion off.
 - Interaction: command palette (Ctrl/⌘ + K), scroll-aware header with section highlighting, sticky
   "On this page" bar and reading progress on case studies, back-to-top button, URL-synced filters.

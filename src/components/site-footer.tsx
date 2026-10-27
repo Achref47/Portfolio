@@ -15,7 +15,10 @@ export function SiteFooter() {
     <footer className="mt-28 border-t border-line">
       <Container className="grid gap-10 py-12 sm:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <p className="font-display text-2xl tracking-tight text-ink">{profile.name}</p>
+          <p className="font-display text-[1.6rem] font-bold text-ink">
+            {profile.name}
+            <span className="text-accent">.</span>
+          </p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-ink-3">
             {profile.role}. {profile.location} · {profile.availability.toLowerCase()}.
           </p>
@@ -24,8 +27,8 @@ export function SiteFooter() {
           </a>
         </div>
         <nav aria-label="Footer">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-3">Site</p>
-          <ul className="mt-3 space-y-2 text-sm">
+          <p className="text-[0.8125rem] font-medium text-ink-3">Site</p>
+          <ul className="mt-3 space-y-2 text-[0.9375rem]">
             <li>
               <Link href="/" className="link-underline text-ink-2 hover:text-ink">
                 Home
@@ -41,8 +44,8 @@ export function SiteFooter() {
           </ul>
         </nav>
         <div>
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-3">Elsewhere</p>
-          <ul className="mt-3 space-y-2 text-sm">
+          <p className="text-[0.8125rem] font-medium text-ink-3">Elsewhere</p>
+          <ul className="mt-3 space-y-2 text-[0.9375rem]">
             {elsewhere.map(({ href, label, Icon }) => (
               <li key={label}>
                 <a href={href} target="_blank" rel="noopener noreferrer" className="link-underline inline-flex items-center gap-2 text-ink-2 hover:text-ink">
@@ -55,7 +58,7 @@ export function SiteFooter() {
         </div>
       </Container>
       <Container>
-        <p className="border-t border-line py-5 font-mono text-[0.7rem] text-ink-3">
+        <p className="border-t border-line py-5 text-[0.8125rem] text-ink-3">
           © {year} {profile.name} · Built with Next.js · Every project claim is sourced from code, reports or the CV.
         </p>
       </Container>

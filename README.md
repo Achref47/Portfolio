@@ -36,7 +36,7 @@ Every page is generated from typed data files — add a project by editing one f
 
 <br />
 
-<img src="docs/screenshots/home-light.webp" alt="Homepage in light mode: animated hero with a terminal of verified project results" width="860" />
+<img src="docs/screenshots/home-light.webp" alt="Homepage in light mode: personal introduction with portrait and verified project results" width="860" />
 
 </div>
 
@@ -57,11 +57,11 @@ Every page is generated from typed data files — add a project by editing one f
 
 |   |   |
 |---|---|
-| 🎯 **Recruiter-first homepage** | A hero that answers *who, what, and proof* in seconds — a "terminal" of verified results that link to their case studies. |
+| 🎯 **Recruiter-first homepage** | A personal opening that answers *who, what, and proof* in seconds — three verified results, each linking to the case study it comes from. |
 | 📚 **Honest project catalogue** | 12 projects with search, area filters and "can open" filters (live demo · video · source · docs). Filters live in the URL, so every view is shareable. |
 | 🧩 **Case studies, not just cards** | Problem → solution → architecture → decisions → results → limitations, with a sticky section nav and reading progress. |
 | ⌨️ **Command palette** | <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> (or <kbd>/</kbd>) jumps to any project, section, profile or action. |
-| 🎬 **Tasteful motion** | CSS-first: word-reveal headline, typed terminal, count-up metrics, cursor spotlight, 3D tilt, scroll reveals. Zero animation libraries; fully off under `prefers-reduced-motion`. |
+| 🎬 **Tasteful motion** | CSS-first: blur-in opening, word-reveal name, a paragraph that lights up as you scroll, an interactive AURA system diagram, a career line that fills, shutter-reveal images, magnetic buttons. Zero animation libraries; fully off under `prefers-reduced-motion`. |
 | 🌗 **Light & dark** | Light by default for everyone; visitors can switch to dark with the header toggle (remembered, no flash on load). |
 | 🔍 **SEO-ready** | Per-page metadata, Open Graph image, JSON-LD `Person`, sitemap and robots, canonical URLs. |
 | 🛡️ **Can't ship a broken link** | A content validator runs before every build (and every Vercel deploy): slugs, links, images and their sizes, alt text, references. |
@@ -76,7 +76,7 @@ Every page is generated from typed data files — add a project by editing one f
     <td width="50%"><img src="docs/screenshots/projects.webp" alt="Project catalogue with search and filters" /><br /><sub><b>Catalogue</b> — search, area and evidence filters, sorting.</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/screenshots/case-study.webp" alt="Case study page for the AURA ecosystem" /><br /><sub><b>Case study</b> — facts, evidence links, problem / built / outcome.</sub></td>
+    <td width="50%"><img src="docs/screenshots/case-study.webp" alt="AURA shown as an interactive system diagram with a real screenshot for the selected stage" /><br /><sub><b>AURA as a system</b> — select a stage to see its real screenshot or measured result.</sub></td>
     <td width="50%" align="center"><img src="docs/screenshots/mobile.webp" alt="Homepage on a phone" width="260" /><br /><sub><b>Mobile</b> — no horizontal scroll on any page.</sub></td>
   </tr>
 </table>
@@ -90,7 +90,7 @@ Every page is generated from typed data files — add a project by editing one f
 | **Framework** | Next.js 16 (App Router, Turbopack, static generation with `generateStaticParams`) |
 | **UI** | React 19, Tailwind CSS 4 (design tokens via `@theme`), no component or animation library |
 | **Language** | TypeScript, strict; typed content models |
-| **Fonts** | Instrument Serif, IBM Plex Sans, IBM Plex Mono via `next/font` (self-hosted) |
+| **Fonts** | Archivo (variable weight and width) via `next/font`, self-hosted; system monospace for code |
 | **Images** | `next/image` + WebP; `sharp`-based optimiser script |
 | **Quality** | Content validator, Node test runner (9 tests), ESLint, `tsc` |
 | **Hosting** | Vercel (static output — no server, database or secrets) |
@@ -184,8 +184,9 @@ Link : https://myportfolio-delta-sepia-55.vercel.app/
 
 ## 🎨 Design & engineering notes
 
-- **Identity:** an "engineer's notebook" — warm paper background with faint grain, ink text, one
-  green accent. Serif for names and titles, sans for text, mono for metadata and numbers.
+- **Identity:** near-black ink and one signal colour used only for what matters — a crisp cool
+  white with a Swiss-poster signal red in light mode, warm charcoal with a lighter coral in dark. One typeface (Archivo) in three widths:
+  wide and heavy for names and titles, light for supporting phrases, normal width for reading.
 - **Progressive enhancement:** content is in the HTML and readable without JavaScript;
   `prefers-reduced-motion` turns motion off.
 - **Accessibility:** landmarks, skip link, one `<h1>` per page, labelled controls, visible focus

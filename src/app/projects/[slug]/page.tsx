@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
 /** One row of the case study: a sticky label on the left, content on the right. */
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="grid scroll-mt-32 gap-4 border-t border-line py-12 md:grid-cols-[200px_1fr] md:gap-10">
-      <h2 id={`${id}-title`} className="font-mono text-[0.75rem] uppercase tracking-[0.14em] text-ink-3 md:sticky md:top-36 md:self-start">
+    <section id={id} aria-labelledby={`${id}-title`} className="grid scroll-mt-32 gap-4 border-t border-line py-12 md:grid-cols-[220px_1fr] md:gap-10">
+      <h2 id={`${id}-title`} className="font-wide text-[1.05rem] font-semibold text-ink md:sticky md:top-36 md:self-start">
         {title}
       </h2>
       <div data-reveal className="min-w-0">
@@ -62,7 +62,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 
 function Paragraphs({ items }: { items: string[] }) {
   return (
-    <div className="prose-body max-w-3xl text-[1.05rem] leading-relaxed text-ink-2">
+    <div className="prose-body max-w-3xl text-[1.0625rem] leading-relaxed text-ink-2">
       {items.map((p) => (
         <p key={p}>{p}</p>
       ))}
@@ -72,9 +72,9 @@ function Paragraphs({ items }: { items: string[] }) {
 
 function Bullets({ items }: { items: string[] }) {
   return (
-    <ul className="max-w-3xl space-y-3 text-[1rem] leading-relaxed text-ink-2">
+    <ul className="max-w-3xl space-y-3 text-[1.0625rem] leading-relaxed text-ink-2">
       {items.map((item) => (
-        <li key={item} className="relative pl-6 before:absolute before:left-0 before:top-[0.72em] before:h-px before:w-3 before:bg-accent">
+        <li key={item} className="relative pl-6 before:absolute before:left-0 before:top-[0.72em] before:h-[2px] before:w-3 before:bg-accent">
           {item}
         </li>
       ))}
@@ -135,7 +135,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
     <article>
       <ScrollProgress />
       <Container className="pt-10 sm:pt-14">
-        <Link href="/projects" className="link-underline inline-flex items-center gap-1.5 text-sm text-ink-3 hover:text-ink">
+        <Link href="/projects" className="link-underline inline-flex items-center gap-1.5 text-[0.9375rem] text-ink-3 hover:text-ink">
           <ArrowLeft className="h-4 w-4" /> All projects
         </Link>
 
@@ -144,18 +144,18 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <Kicker>
               {typeLabel(project)} · {project.year}
             </Kicker>
-            <h1 className="mt-4 font-display text-[2.5rem] leading-[1.02] tracking-tight text-ink sm:text-6xl">{project.title}</h1>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink-2">{project.tagline}</p>
+            <h1 className="mt-4 font-display text-[clamp(2.3rem,5.2vw,4.4rem)] font-bold leading-[0.98] text-ink">{project.title}</h1>
+            <p className="mt-6 max-w-3xl text-[1.1875rem] leading-relaxed text-ink-2">{project.tagline}</p>
             {project.award && (
-              <p className="mt-5 inline-flex items-start gap-2 rounded-lg bg-accent-soft px-3.5 py-2 text-sm font-medium text-accent">
-                <Award className="mt-0.5 h-4 w-4 shrink-0" /> {project.award}
+              <p className="mt-5 inline-flex items-start gap-2 rounded-full bg-accent-soft px-4 py-2 text-[0.9375rem] font-medium text-ink">
+                <Award className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> {project.award}
               </p>
             )}
           </div>
-          <dl className="grid h-fit grid-cols-2 gap-x-6 gap-y-4 rounded-xl border border-line bg-surface p-5 text-sm lg:grid-cols-1">
+          <dl className="grid h-fit grid-cols-2 gap-x-6 gap-y-4 border-t-2 border-ink pt-4 text-[0.9375rem] lg:grid-cols-1">
             {facts.map((f) => (
               <div key={f.label}>
-                <dt className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-3">{f.label}</dt>
+                <dt className="text-[0.8125rem] font-medium text-ink-3">{f.label}</dt>
                 <dd className="mt-1 text-ink">{f.value}</dd>
               </div>
             ))}
@@ -168,17 +168,17 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         </div>
 
         {d.glance && (
-          <section aria-label="At a glance" className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
+          <section aria-label="At a glance" className="mt-12 grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3">
             {[
               { label: "The problem", text: d.glance.problem },
               { label: "What I built", text: d.glance.built },
               { label: "Outcome", text: d.glance.outcome },
             ].map((g, i) => (
-              <div key={g.label} data-spotlight className="group relative bg-surface p-6 transition-colors duration-300 hover:bg-bg">
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-accent">
-                  0{i + 1} · {g.label}
+              <div key={g.label} className="bg-surface p-6">
+                <p className="text-[0.8125rem] font-medium text-accent">
+                  <span className="tabular-nums">0{i + 1}</span> · {g.label}
                 </p>
-                <p className="mt-3 leading-relaxed text-ink">{g.text}</p>
+                <p className="mt-3 text-[1.0625rem] leading-relaxed text-ink">{g.text}</p>
               </div>
             ))}
           </section>
@@ -187,12 +187,12 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         {project.metrics && (
           <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-4">
             {project.metrics.map((m) => (
-              <div key={m.label} className="flex flex-col bg-surface p-5 transition-colors duration-300 hover:bg-bg">
-                <dt className="order-2 mt-1 text-sm leading-snug text-ink-2">
+              <div key={m.label} className="flex flex-col bg-bg p-5">
+                <dt className="order-2 mt-2 text-[0.9375rem] leading-snug text-ink-2">
                   {m.label}
-                  {m.context && <span className="mt-1 block font-mono text-[0.68rem] leading-snug text-ink-3">{m.context}</span>}
+                  {m.context && <span className="mt-1 block text-[0.8125rem] leading-snug text-ink-3">{m.context}</span>}
                 </dt>
-                <dd className="order-1 font-mono text-2xl font-medium tracking-tight text-ink">
+                <dd className="order-1 font-display text-[2rem] font-semibold leading-none text-ink">
                   <CountUp value={m.value} />
                 </dd>
               </div>
@@ -204,7 +204,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           {hero?.type === "youtube" && <YouTubeEmbed media={hero} />}
           {hero?.type === "video" && <VideoFile media={hero} />}
           {!hero && project.cover && (
-            <figure className="rounded-2xl border border-line bg-surface-2/70 p-2.5 sm:p-3">
+            <figure>
               <Image
                 src={project.cover.src}
                 alt={project.cover.alt}
@@ -212,7 +212,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                 height={project.cover.height}
                 sizes="(min-width: 1180px) 1120px, 100vw"
                 preload
-                className={`rounded-xl border border-line bg-surface ${
+                className={`rounded-lg border border-line bg-surface ${
                   project.cover.height > project.cover.width ? "mx-auto max-h-[640px] w-auto" : "w-full"
                 }`}
               />
@@ -253,8 +253,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <div className="space-y-16">
               {d.components.map((c) => (
                 <div key={c.name}>
-                  <p className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-accent">{c.role}</p>
-                  <h3 className="mt-2 font-display text-3xl tracking-tight text-ink">{c.name}</h3>
+                  <p className="text-[0.875rem] font-medium text-accent">{c.role}</p>
+                  <h3 className="mt-2 font-display text-[clamp(1.6rem,2.8vw,2.2rem)] font-semibold leading-tight text-ink">{c.name}</h3>
                   <p className="mt-3 max-w-3xl leading-relaxed text-ink-2">{c.summary}</p>
                   <div className="mt-5">
                     <Bullets items={c.points} />
@@ -262,7 +262,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                   <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
                     <TechLine tech={c.tech} />
                     {c.access && (
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] text-ink-3">
+                      <span className="inline-flex items-center gap-1.5 text-[0.8125rem] text-ink-3">
                         <Lock className="h-3.5 w-3.5" /> {c.access}
                       </span>
                     )}
@@ -294,7 +294,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         )}
         {d.codeSample && (
           <Section id="try-it" title={title("try-it")}>
-            <figure className="max-w-3xl overflow-hidden rounded-xl border border-line bg-[#0f1216] text-[#e6e6e3]">
+            <figure className="max-w-3xl overflow-hidden rounded-lg border border-line bg-[#16171a] text-[#e8e9ec]">
               <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2.5">
                 <span className="font-mono text-[0.72rem] text-white/70">{d.codeSample.title}</span>
                 <CopyButton text={d.codeSample.code} />
@@ -339,9 +339,9 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       {related.length > 0 && (
         <section aria-labelledby="related-title" className="mt-10">
           <Container>
-            <div className="border-t border-line pt-10">
+            <div className="border-t-2 border-ink pt-6">
               <Kicker>Keep exploring</Kicker>
-              <h2 id="related-title" className="mt-3 font-display text-4xl tracking-tight text-ink">
+              <h2 id="related-title" className="mt-3 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-none text-ink">
                 Related projects
               </h2>
               <ul className="mt-8 grid gap-6 md:grid-cols-3">
@@ -365,12 +365,12 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             <Link
               key={label}
               href={projectHref(p)}
-              className={`group rounded-xl border border-line bg-surface p-5 transition-colors hover:border-line-strong ${label === "Next" ? "sm:text-right" : ""}`}
+              className={`group rounded-xl border border-line p-5 transition-colors hover:border-ink ${label === "Next" ? "sm:text-right" : ""}`}
             >
-              <span className={`inline-flex items-center gap-1.5 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-ink-3 ${label === "Next" ? "sm:flex-row-reverse" : ""}`}>
+              <span className={`inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-ink-3 ${label === "Next" ? "sm:flex-row-reverse" : ""}`}>
                 <Icon className="h-3.5 w-3.5" /> {label} case study
               </span>
-              <span className="mt-2 block font-medium text-ink group-hover:text-accent">{p.title}</span>
+              <span className="mt-2 block font-wide text-[1.1rem] font-semibold text-ink transition-colors group-hover:text-accent">{p.title}</span>
             </Link>
           ))}
         </nav>

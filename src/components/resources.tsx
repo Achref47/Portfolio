@@ -20,17 +20,17 @@ export function ResourceLabels({ project }: { project: Project }) {
   const kinds = order.filter((k) => project.resources.some((r) => r.kind === k));
   if (kinds.length === 0) {
     return (
-      <p className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] text-ink-3">
+      <p className="inline-flex items-center gap-1.5 text-[0.8125rem] text-ink-3">
         <Lock className="h-3.5 w-3.5" /> Not publicly available
       </p>
     );
   }
   return (
-    <ul className="flex flex-wrap gap-x-3 gap-y-1" aria-label="Available resources">
+    <ul className="flex flex-wrap gap-x-4 gap-y-1" aria-label="Available resources">
       {kinds.map((k) => {
         const { label, Icon, tone } = resourceKinds[k];
         return (
-          <li key={k} className={`inline-flex items-center gap-1.5 font-mono text-[0.72rem] ${tone}`}>
+          <li key={k} className={`inline-flex items-center gap-1.5 text-[0.8125rem] font-medium ${tone}`}>
             <Icon className="h-3.5 w-3.5" />
             {label}
           </li>
@@ -56,15 +56,15 @@ export function ResourceLinks({ project, compact = false }: { project: Project; 
                   href={r.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group inline-flex flex-col rounded-lg border border-line bg-surface transition-colors hover:border-line-strong hover:bg-surface-2 ${
+                  className={`group inline-flex flex-col rounded-lg border border-line-strong bg-surface transition-colors hover:border-ink ${
                     compact ? "px-3 py-2" : "px-4 py-3"
                   }`}
                 >
-                  <span className={`inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.12em] ${tone}`}>
+                  <span className={`inline-flex items-center gap-1.5 text-[0.75rem] font-medium ${tone}`}>
                     <Icon className="h-3.5 w-3.5" />
                     {kindLabel}
                   </span>
-                  <span className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-ink">
+                  <span className="mt-1 inline-flex items-center gap-1 text-[0.9375rem] font-medium text-ink">
                     {r.label}
                     <ArrowUpRight className="h-3.5 w-3.5 text-ink-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     <span className="sr-only">(opens in a new tab)</span>
@@ -81,7 +81,7 @@ export function ResourceLinks({ project, compact = false }: { project: Project; 
 
 export function AvailabilityNote({ note }: { note: string }) {
   return (
-    <p className="flex items-start gap-2.5 rounded-lg border border-dashed border-line-strong bg-surface-2/50 px-4 py-3 text-sm leading-relaxed text-ink-2">
+    <p className="flex items-start gap-2.5 rounded-lg border border-dashed border-line-strong px-4 py-3 text-[0.9375rem] leading-relaxed text-ink-2">
       <Lock className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" />
       <span>{note}</span>
     </p>

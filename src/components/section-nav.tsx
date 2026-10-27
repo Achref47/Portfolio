@@ -35,16 +35,16 @@ export function SectionNav({ sections }: { sections: { id: string; title: string
   }, [active]);
 
   return (
-    <nav aria-label="On this page" className="sticky top-16 z-30 -mx-5 border-y border-line bg-bg/85 px-5 backdrop-blur-md sm:-mx-8 sm:px-8">
+    <nav aria-label="On this page" className="sticky top-16 z-30 -mx-5 border-y border-line bg-bg/90 px-5 backdrop-blur-md sm:-mx-8 sm:px-8 lg:-mx-10 lg:px-10">
       <ul ref={listRef} className="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <li className="flex shrink-0 items-center pr-2 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-3">On this page</li>
+        <li className="flex shrink-0 items-center pr-2 text-[0.8125rem] font-medium text-ink-3">On this page</li>
         {sections.map((s) => (
           <li key={s.id} data-id={s.id} className="shrink-0">
             <a
               href={`#${s.id}`}
               aria-current={active === s.id ? "location" : undefined}
               data-active={active === s.id ? "" : undefined}
-              className="block rounded-full px-3 py-1.5 text-[0.82rem] text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink data-[active]:bg-ink data-[active]:text-bg"
+              className="block rounded-full px-3 py-1.5 text-[0.875rem] text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink data-[active]:bg-ink data-[active]:text-bg"
             >
               {s.title}
             </a>

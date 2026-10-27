@@ -21,7 +21,7 @@ export function CopyButton({ text, label = "Copy" }: { text: string; label?: str
     <button
       type="button"
       onClick={copy}
-      className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-2.5 py-1 font-mono text-[0.7rem] text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+      className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-2.5 py-1 text-[0.75rem] text-white/80 transition-colors hover:bg-white/10 hover:text-white"
     >
       {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
       <span aria-live="polite">{copied ? "Copied" : label}</span>

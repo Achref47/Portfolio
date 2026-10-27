@@ -3,6 +3,7 @@
  * shared on LinkedIn, Slack, etc.) from profile.ts, including the profile
  * photo when one is set. Run after changing your name, role or photo:
  *   npm run og
+ * Colours follow the site's light theme (globals.css).
  */
 import path from "node:path";
 import sharp, { type OverlayOptions } from "sharp";
@@ -10,32 +11,24 @@ import { profile } from "../src/content/profile.ts";
 
 const escape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// Photo placement (top right): a ring, then the round photo on top of it.
-const PHOTO = { size: 210, x: 910, y: 70 };
+const C = { bg: "#f6f6f7", ink: "#111215", ink2: "#3e4249", ink3: "#61666f", line: "#dfe1e5", accent: "#d0281b" };
+
+// Photo placement (top right), inside a thin accent ring.
+const PHOTO = { size: 200, x: 920, y: 80 };
 const cx = PHOTO.x + PHOTO.size / 2;
 const cy = PHOTO.y + PHOTO.size / 2;
+const [first, ...rest] = profile.name.split(" ");
 
 const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#22272e" stroke-width="1"/>
-    </pattern>
-    <radialGradient id="glow" cx="${cx}" cy="${cy}" r="320" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#4fd1ae" stop-opacity="0.18"/>
-      <stop offset="1" stop-color="#4fd1ae" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="1200" height="630" fill="#0d0f12"/>
-  <rect width="1200" height="630" fill="url(#grid)" opacity="0.6"/>
-  ${profile.photo ? `<rect width="1200" height="630" fill="url(#glow)"/>
-  <circle cx="${cx}" cy="${cy}" r="${PHOTO.size / 2 + 7}" fill="none" stroke="#4fd1ae" stroke-width="3" opacity="0.85"/>` : ""}
-  <rect x="80" y="80" width="64" height="64" rx="12" fill="#ecebe6"/>
-  <text x="112" y="122" text-anchor="middle" font-family="Consolas, Menlo, monospace" font-size="24" font-weight="700" fill="#0d0f12">AE</text>
-  <text x="80" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="92" fill="#ecebe6">${escape(profile.name)}</text>
-  <text x="82" y="370" font-family="Consolas, Menlo, monospace" font-size="28" fill="#4fd1ae">${escape(profile.role)}</text>
-  <text x="82" y="520" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#9a9ea5">Full-stack applications · Machine learning · Data products</text>
-  <rect x="80" y="545" width="120" height="4" rx="2" fill="#4fd1ae"/>
+  <rect width="1200" height="630" fill="${C.bg}"/>
+  <rect x="80" y="80" width="1040" height="4" fill="${C.ink}"/>
+  <text x="80" y="140" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="${C.ink3}">Software engineer · ${escape(profile.location)}</text>
+  ${profile.photo ? `<circle cx="${cx}" cy="${cy}" r="${PHOTO.size / 2 + 8}" fill="none" stroke="${C.accent}" stroke-width="3"/>` : ""}
+  <text x="76" y="330" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="112" font-weight="800" letter-spacing="-3" fill="${C.ink}">${escape(first)}</text>
+  <text x="76" y="440" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="112" font-weight="800" letter-spacing="-3" fill="${C.ink}">${escape(rest.join(" "))}<tspan fill="${C.accent}">.</tspan></text>
+  <rect x="80" y="500" width="1040" height="1.5" fill="${C.line}"/>
+  <text x="80" y="550" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="28" fill="${C.ink2}">Machine learning · LLM applications · Data science · <tspan fill="${C.accent}" font-weight="600">Full-stack</tspan></text>
 </svg>`;
 
 const layers: OverlayOptions[] = [];

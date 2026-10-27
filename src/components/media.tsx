@@ -43,7 +43,7 @@ export function YouTubeEmbed({ media }: { media: YouTubeMedia }) {
             </span>
             <span className="absolute bottom-4 left-4 right-4 text-left text-sm font-medium text-white">
               {media.title}
-              <span className="ml-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-white/70">Video demo</span>
+              <span className="ml-2 text-[0.8125rem] font-normal text-white/70">Video demo</span>
             </span>
           </button>
         )}
@@ -54,7 +54,7 @@ export function YouTubeEmbed({ media }: { media: YouTubeMedia }) {
           href={watchUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 font-mono text-[0.72rem] uppercase tracking-[0.1em] hover:text-ink"
+          className="inline-flex items-center gap-1 text-[0.8125rem] font-medium hover:text-ink"
         >
           Watch on YouTube <ArrowUpRight className="h-3.5 w-3.5" />
           <span className="sr-only">(opens in a new tab)</span>
@@ -168,7 +168,7 @@ export function Gallery({ images, columns = 2 }: { images: ImageMedia[]; columns
             />
             <figcaption className="mt-3 flex w-full items-center justify-between gap-4 text-sm">
               <span className="text-white/85">{current.caption ?? current.alt}</span>
-              <span className="shrink-0 font-mono text-xs text-white/60">
+              <span className="shrink-0 text-xs tabular-nums text-white/60">
                 {index + 1} / {images.length}
               </span>
             </figcaption>

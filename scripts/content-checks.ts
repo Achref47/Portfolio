@@ -97,6 +97,12 @@ export async function checkContent(input: ContentInput): Promise<{ errors: strin
     for (const comp of p.details?.components ?? []) {
       for (const [i, m] of (comp.media ?? []).entries()) await checkImage(m, `${where} ${comp.name} media[${i}]`);
     }
+    for (const [i, step] of (p.details?.architecture?.steps ?? []).entries()) {
+      if (step.image) await checkImage(step.image, `${where} architecture step ${i + 1}`);
+      if (step.metric !== undefined && !p.metrics?.[step.metric]) {
+        errors.push(`${where}: architecture step ${i + 1} points at metric ${step.metric}, which does not exist`);
+      }
+    }
 
     const d = p.details;
     if (d) {

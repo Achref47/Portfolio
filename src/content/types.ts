@@ -89,6 +89,13 @@ export interface CodeSample {
 export interface FlowStep {
   title: string;
   detail: string;
+  /**
+   * Optional evidence shown when the step is selected in the interactive
+   * system view on the homepage: a real screenshot of what this step produces…
+   */
+  image?: ImageMedia;
+  /** …or the index of one of the project's `metrics` that this step is responsible for. */
+  metric?: number;
 }
 
 /** A product or service inside a larger project (used by AURA's three products). */

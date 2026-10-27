@@ -100,3 +100,43 @@ when scrolling back to the top.
   then update the resource note.
 - ECG repository README still contains placeholder metrics that contradict the real results.
 - No automated Lighthouse/axe run (tools not installed); checks were manual plus scripted DOM checks.
+
+## Third pass — visual identity (October 2026)
+
+Feedback from people with UI/UX experience: content and UX are strong, but the typography, sizes
+and colours read as AI-generated.
+
+### Diagnosis
+
+| Problem | Why it read as a template |
+|---|---|
+| Instrument Serif + IBM Plex Sans + Plex Mono | The default pairing of generated portfolios; three voices competing |
+| Small uppercase mono labels everywhere | Kickers, meta lines, dates, tech lists and buttons all used the same "terminal" voice |
+| Fake terminal with traffic-light dots | Real results presented as a costume |
+| Grid backdrop, status ping, badge pill, marquee of tools, cursor spotlight, 3D tilt + glare, grain | Seven decorative motifs, none specific to the owner |
+| Warm paper + teal-green accent | Colour with no meaning, the accent every tool picks |
+| Small avatar beside a badge | The person was the least visible element of the first screen |
+
+References studied: DAQ Consulting (weight contrast in headlines, scroll-lit manifesto, numbered
+"hover a stage to inspect" pipeline). The two personal references turned out to be the same 3D
+template (aabu-sayed-portfolio.vercel.app serves Redoyanul Haque's content); in headless capture
+both stayed on their loading screen, so only their hero, text and motion ideas (blur-in lines,
+career timeline that fills) were used.
+
+### Direction implemented
+
+- One variable typeface, Archivo, in three widths (125 % display, 112 % titles, 100 % text);
+  light/bold contrast inside display headings; no mono outside code.
+- Palette: near-black ink and one signal colour — cool white with signal red (light), warm
+  charcoal with coral (dark). The first light version (cream + terracotta) was replaced because it
+  read as Claude's own palette. Text colours pass WCAG AA on both themes.
+- Hero: greeting with the portrait set inside the headline (kept small because the source photo
+  is low resolution), very large name, rotating focus line, intro and calls to action, then three
+  verified results linking to their case studies. Terminal, grid, ping and tool marquee removed.
+- About as a scroll-lit paragraph; AURA as an interactive system (six real architecture stages,
+  each backed by a real screenshot or a measured metric; ARIA tabs, automatic tour that stops on
+  interaction or reduced motion), its three products with real screenshots, all four metrics with
+  context; other projects as an editorial index; experience as a timeline that fills on scroll;
+  awards as evidence photos plus a ruled list; skills as rows; contact as a large statement.
+- Catalogue, case studies, header, footer, palette and 404 restyled with the same tokens.
+- Content model: `FlowStep` gained optional `image` and `metric`; the validator checks both.

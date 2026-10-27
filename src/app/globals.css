@@ -1,47 +1,51 @@
 @import "tailwindcss";
 
 /*
- * Design tokens. Light is the default; dark applies when the visitor picks it
- * (data-theme="dark", set by the toggle) or, before any choice, when the
- * system prefers dark.
+ * Design tokens.
+ *
+ * Identity: near-black ink and one signal colour, used only for what matters
+ * (a number, the current item, a link on hover) — never as a glow or a
+ * gradient. Light (the default) is a cool, crisp white with a Swiss-poster
+ * signal red; dark (picked with the header toggle) is warm charcoal, where the
+ * same signal reads as a lighter coral.
  */
 :root {
-  --bg: #f6f5f1;
+  --bg: #f6f6f7;
   --surface: #ffffff;
-  --surface-2: #eeece6;
-  --ink: #15171a;
-  --ink-2: #41454c;
-  --ink-3: #62666e;
-  --line: #dcd9d0;
-  --line-strong: #c4c0b5;
-  --accent: #0a6b57;
+  --surface-2: #ebecef;
+  --ink: #111215;
+  --ink-2: #3e4249;
+  --ink-3: #61666f;
+  --line: #dfe1e5;
+  --line-strong: #c2c6cd;
+  --accent: #d0281b;
   --accent-ink: #ffffff;
-  --accent-soft: #dcede7;
-  --live: #0a6b57;
-  --video: #9a4f00;
-  --docs: #2849b0;
-  --source: #15171a;
-  --shadow: 0 1px 2px rgb(20 20 20 / 0.04), 0 8px 24px -12px rgb(20 20 20 / 0.12);
+  --accent-soft: #fbe4e1;
+  --live: #1f7a4a;
+  --video: #8f5600;
+  --docs: #2a4fc4;
+  --source: #111215;
+  --shadow: 0 1px 2px rgb(17 18 21 / 0.05), 0 18px 40px -24px rgb(17 18 21 / 0.22);
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg: #0d0f12;
-  --surface: #14171b;
-  --surface-2: #1b1f24;
-  --ink: #ecebe6;
-  --ink-2: #c0c2c6;
-  --ink-3: #9a9ea5;
-  --line: #2a2f36;
-  --line-strong: #3a4049;
-  --accent: #4fd1ae;
-  --accent-ink: #062019;
-  --accent-soft: #10302a;
-  --live: #4fd1ae;
-  --video: #f2b766;
-  --docs: #9db4ff;
-  --source: #ecebe6;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -16px rgb(0 0 0 / 0.6);
+  --bg: #12110e;
+  --surface: #1a1915;
+  --surface-2: #23211c;
+  --ink: #f0ece2;
+  --ink-2: #c7c1b3;
+  --ink-3: #9b9587;
+  --line: #2d2b25;
+  --line-strong: #46423a;
+  --accent: #ff7a4d;
+  --accent-ink: #1a0b05;
+  --accent-soft: #3b1e13;
+  --live: #79d39a;
+  --video: #f1b65e;
+  --docs: #a4b6ff;
+  --source: #f0ece2;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 18px 40px -24px rgb(0 0 0 / 0.7);
   color-scheme: dark;
 }
 
@@ -61,10 +65,26 @@
   --color-video: var(--video);
   --color-docs: var(--docs);
   --color-source: var(--source);
-  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
-  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
   --shadow-card: var(--shadow);
+}
+
+/*
+ * Typography. One family, three voices:
+ * - font-display: 125% width — names, section titles, big numbers;
+ * - font-wide: 112% width — card titles and small headings;
+ * - the default 100% width for reading.
+ */
+@utility font-display {
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-stretch: 125%;
+  letter-spacing: -0.025em;
+}
+@utility font-wide {
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-stretch: 112%;
+  letter-spacing: -0.012em;
 }
 
 html {
@@ -73,11 +93,22 @@ html {
   scroll-padding-top: 5rem;
 }
 
-/* The page colour lives on <html> so the grain layer below can sit between it and the content. */
 body {
   color: var(--ink);
   font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
 }
 
 ::selection {
@@ -91,41 +122,35 @@ body {
   border-radius: 4px;
 }
 
-/* Faint engineering grid used behind the hero card. */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, var(--line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* Very faint paper grain over the page background (decorative, non-interactive). */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.35;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 /* Long-form text inside case studies. */
 .prose-body p + p {
   margin-top: 1rem;
 }
 
-/* Text link with an underline that grows on hover. */
+/* Text link with an underline that draws in on hover. */
 .link-underline {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
-  transition: background-size 0.25s ease;
+  transition: background-size 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .link-underline:hover,
 .link-underline:focus-visible {
   background-size: 100% 1px;
+}
+
+/* Underline that is always there and swaps colour on hover (big contact link). */
+.link-rule {
+  background-image: linear-gradient(var(--accent), var(--accent)), linear-gradient(var(--line-strong), var(--line-strong));
+  background-size: 0% 2px, 100% 2px;
+  background-position: 0 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.link-rule:hover,
+.link-rule:focus-visible {
+  background-size: 100% 2px, 100% 2px;
 }
 
 /*
@@ -135,13 +160,29 @@ body::before {
  */
 .reveal-ready [data-reveal]:not([data-revealed]) {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(18px);
 }
 .reveal-ready [data-reveal] {
   transition:
-    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-  transition-delay: calc(var(--reveal-i, 0) * 70ms);
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    clip-path 1.1s cubic-bezier(0.65, 0, 0.25, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 80ms);
+}
+/* Images open like a shutter instead of fading. */
+.reveal-ready [data-reveal="clip"]:not([data-revealed]) {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(12% 8% 12% 8% round 14px);
+}
+.reveal-ready [data-reveal="clip"] img {
+  transition: scale 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal-ready [data-reveal="clip"]:not([data-revealed]) img {
+  scale: 1.12;
+}
+[data-reveal="clip"] {
+  clip-path: inset(0 0 0 0 round 0);
 }
 
 @keyframes drop-in {
@@ -170,7 +211,7 @@ body::before {
   animation: fade-in 0.3s ease-out backwards;
 }
 
-/* ── Motion & interaction system ─────────────────────────────────────────── */
+/* ── Motion ──────────────────────────────────────────────────────────────── */
 
 /*
  * Page enter (app/template.tsx). Transform-led so content is never invisible.
@@ -187,150 +228,89 @@ body::before {
   animation: page-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
 }
 
-/* Word-by-word rise for display headings: <span class="word-reveal"><span><span style="--w:0">…</span></span></span> */
+/* Opening sequence: lines rise out of a soft blur, one after another (--d). */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.55em);
+    filter: blur(12px);
+  }
+}
+.rise {
+  animation: rise 1.05s cubic-bezier(0.2, 0.75, 0.15, 1) backwards;
+  animation-delay: calc(var(--d, 0) * 110ms + 120ms);
+}
+
+/* Word-by-word rise for the name: <span class="word-reveal"><span><span style="--w:0">…</span></span></span> */
 @keyframes word-up {
   from {
-    transform: translateY(108%);
+    transform: translateY(105%);
   }
 }
 .word-reveal > span {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
 }
 .word-reveal > span > span {
   display: inline-block;
-  animation: word-up 0.9s cubic-bezier(0.2, 0.75, 0.15, 1) backwards;
-  animation-delay: calc(var(--w, 0) * 90ms + 80ms);
+  animation: word-up 1s cubic-bezier(0.2, 0.75, 0.15, 1) backwards;
+  animation-delay: calc(var(--w, 0) * 110ms + 200ms);
 }
 
-/* Lines that type in, one after another (hero terminal). */
-@keyframes line-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-}
-.line-in {
-  animation: line-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
-  animation-delay: calc(var(--l, 0) * 120ms + 250ms);
-}
-@keyframes caret {
-  50% {
-    opacity: 0;
-  }
-}
-.caret::after {
-  content: "";
-  display: inline-block;
-  width: 0.55em;
-  height: 1.05em;
-  margin-left: 2px;
-  vertical-align: -0.15em;
-  background: currentColor;
-  animation: caret 1.05s steps(1) infinite;
-}
-
-/* Rotating word in the hero headline. */
+/* Rotating phrase in the hero. */
 @keyframes rotate-in {
   from {
     opacity: 0;
-    transform: translateY(0.45em);
-    filter: blur(4px);
+    transform: translateY(0.5em);
+    filter: blur(6px);
   }
 }
 .rotate-in {
   display: inline-block;
-  animation: rotate-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation: rotate-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
 }
 
-/* Infinite technology strip. The track holds the list twice. */
+/* Large type band. The track holds the list twice. */
 @keyframes marquee {
   to {
     transform: translateX(-50%);
   }
 }
-.marquee {
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-}
 .marquee-track {
-  animation: marquee 48s linear infinite;
+  animation: marquee 60s linear infinite;
 }
-.marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track {
+.marquee:hover .marquee-track {
   animation-play-state: paused;
 }
 
 /*
- * Cursor spotlight. PointerEffects sets --mx/--my on the hovered
- * [data-spotlight] element; the glow sits between its background and content.
+ * Scroll-lit paragraph. ScrollScene writes --p (0 → 1) as the paragraph
+ * crosses the screen; each word knows its index (--i) and the word count
+ * (--n), so words light up in reading order. Without JavaScript --p stays 1
+ * and every word is fully visible.
  */
-[data-spotlight] {
-  isolation: isolate;
-}
-[data-spotlight]::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(
-    520px circle at var(--mx, 50%) var(--my, 50%),
-    color-mix(in oklab, var(--accent) 14%, transparent),
-    transparent 42%
-  );
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-[data-spotlight]:hover::before {
-  opacity: 1;
+.scroll-words [data-w] {
+  opacity: clamp(0.16, calc(var(--p, 1) * var(--n) * 1.2 - var(--i)), 1);
+  transition: opacity 0.2s linear;
 }
 
-/* Hero backdrop: an engineering grid lit around the cursor. */
-.hero-grid {
-  background-image:
-    linear-gradient(to right, var(--line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(560px circle at var(--mx, 72%) var(--my, 38%), black, transparent 70%);
-  transition: mask-position 0.2s;
-}
-
-/* 3D tilt for screenshot frames (driven by HoverTilt). */
-.tilt-target {
-  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
-  will-change: transform;
-}
-.tilt-active .tilt-target {
-  transition-duration: 0.12s;
-}
-.tilt-glare {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(600px circle at var(--gx, 50%) var(--gy, 0%), rgb(255 255 255 / 0.16), transparent 45%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.tilt-active .tilt-glare {
-  opacity: 1;
-}
-
-/* "Open to work" status dot. */
-@keyframes ping-soft {
-  75%,
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
+/* Timer drawn along the active stage of the system diagram during its automatic tour. */
+@keyframes stage-timer {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
-.status-ping {
-  animation: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+/* Career line that fills as the timeline scrolls past (--p from ScrollScene). */
+.timeline-fill {
+  transform-origin: top;
+  transform: scaleY(var(--p, 1));
 }
 
 /* Sequenced architecture steps: the connector draws, then the step rises. */
@@ -344,20 +324,38 @@ body::before {
   transform: scaleX(1);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none !important;
-  }
-  .caret::after,
-  .status-ping {
-    animation: none !important;
-  }
-  .tilt-target {
-    transform: none !important;
-  }
-  .reveal-ready [data-reveal] .flow-line {
-    transform: none;
-  }
+/* Magnetic buttons: PointerEffects writes --tx/--ty while the cursor is close. */
+[data-magnetic] {
+  transform: translate(var(--tx, 0), var(--ty, 0));
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+/* Arrow that slides out and back in on hover (inside a .group). */
+.arrow-swap {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+}
+.arrow-swap > :first-child {
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.arrow-swap > :last-child {
+  position: absolute;
+  inset: 0;
+  transform: translateX(-110%);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.group:hover .arrow-swap > :first-child,
+.group:focus-visible .arrow-swap > :first-child {
+  transform: translateX(110%);
+}
+.group:hover .arrow-swap > :last-child,
+.group:focus-visible .arrow-swap > :last-child {
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -372,8 +370,30 @@ body::before {
     transition-duration: 0.01ms !important;
     transition-delay: 0ms !important;
   }
+  .marquee-track {
+    animation: none !important;
+  }
   .reveal-ready [data-reveal]:not([data-revealed]) {
     opacity: 1;
     transform: none;
+    clip-path: none;
+  }
+  .reveal-ready [data-reveal] .flow-line {
+    transform: none;
+  }
+  .scroll-words [data-w] {
+    opacity: 1;
+  }
+  .timeline-fill {
+    transform: none;
+  }
+  [data-magnetic] {
+    transform: none;
+  }
+}
+
+@media print {
+  .scroll-words [data-w] {
+    opacity: 1;
   }
 }

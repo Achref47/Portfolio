@@ -1,185 +1,163 @@
 import Link from "next/link";
-import { education } from "@/content/experience";
+import { Fragment, type CSSProperties } from "react";
 import { profile } from "@/content/profile";
-import { skillGroups } from "@/content/skills";
 import { getHighlights, projectHref } from "@/lib/content";
 import { Avatar } from "./avatar";
 import { HeroRotator } from "./hero-rotator";
-import { ArrowRight, ArrowUpRight, Download, GitHubMark, LinkedInMark } from "./icons";
-import { button, Container } from "./ui";
+import { Download, GitHubMark, LinkedInMark } from "./icons";
+import { ArrowLabel, button, Container } from "./ui";
+
+const d = (n: number) => ({ ["--d" as string]: n }) as CSSProperties;
 
 /** Splits text into words wrapped for the .word-reveal animation. */
 function RevealWords({ text, offset = 0 }: { text: string; offset?: number }) {
   return (
     <span className="word-reveal">
       {text.split(" ").map((word, i) => (
-        <span key={`${word}-${i}`}>
-          <span style={{ ["--w" as string]: i + offset }}>{word}</span>
-          {" "}
-        </span>
+        <Fragment key={`${word}-${i}`}>
+          {i > 0 && " "}
+          <span>
+            <span style={{ ["--w" as string]: i + offset } as CSSProperties}>{word}</span>
+          </span>
+        </Fragment>
       ))}
     </span>
   );
 }
 
 const iconLink =
-  "inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink-2 transition-[color,background-color,transform] hover:-translate-y-0.5 hover:bg-surface-2 hover:text-ink";
+  "inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong text-ink-2 hover:border-ink hover:text-ink";
 
+/**
+ * Opening screen: a personal introduction set in one wide typeface, the
+ * portrait inside the greeting, then three verified results that each lead to
+ * the case study they come from.
+ */
 export function Hero() {
   const highlights = getHighlights();
   const rotation = profile.headlineRotation;
-  const graduation = education.period.split("–").pop()?.trim();
+  const [city, ...country] = profile.location.split(",");
 
   return (
-    <section aria-label="Introduction" data-pointer className="relative overflow-hidden">
-      <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0 opacity-70" />
-      <Container className="relative grid gap-14 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-14 lg:pb-24">
-        <div>
-          <div className="line-in flex items-center gap-4" style={{ ["--l" as string]: -2 }}>
-            {profile.photo ? (
-              <Avatar size={68} status preload className="transition-transform duration-500 hover:-rotate-3 hover:scale-105" />
-            ) : null}
-            <div>
-              <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-3 py-1 text-[0.8rem] text-ink-2 shadow-sm backdrop-blur">
-                {!profile.photo && <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />}
-                {profile.status}
-              </p>
-              <p className="mt-1.5 pl-1 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-ink-3">
-                Software Engineer · {profile.location.split(",")[0]}
-                <span className="hidden sm:inline">,{profile.location.split(",").slice(1).join(",")}</span>
-              </p>
-            </div>
-          </div>
-
-          <h1 className="mt-6 font-display text-[3.5rem] leading-[0.95] tracking-tight text-ink sm:text-7xl lg:text-[6rem]">
-            <RevealWords text={profile.name} />
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-[1.2rem] leading-snug text-ink sm:text-[1.55rem]">
-            <span className="sr-only">{profile.headline}</span>
-            <span aria-hidden="true" className="line-in" style={{ ["--l" as string]: 0 }}>
-              {rotation.lead} <HeroRotator words={rotation.focus} />
-              <span className="mt-1 block text-ink-2">{rotation.tail}</span>
-            </span>
+    <section aria-label="Introduction">
+      <Container className="pb-14 pt-8 sm:pt-12 lg:pb-20 lg:pt-14">
+        <div className="rise flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-[0.875rem] text-ink-2" style={d(0)}>
+          <p>
+            Software engineer — {city}
+            <span className="hidden sm:inline">,{country.join(",")}</span>
           </p>
-          <p className="line-in mt-5 max-w-xl leading-relaxed text-ink-2" style={{ ["--l" as string]: 1 }}>
-            {profile.intro}
+          <p className="inline-flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+            {profile.status}
           </p>
-
-          <div className="line-in mt-8 flex flex-wrap items-center gap-3" style={{ ["--l" as string]: 2 }}>
-            <Link href="/projects" className={`group ${button("primary")}`}>
-              Explore my projects <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            <Link href="/#contact" className={button("secondary")}>
-              Contact me
-            </Link>
-            {profile.resume.enabled && (
-              <a href={profile.resume.href} download className={button("secondary")}>
-                <Download className="h-4 w-4" /> Resume (PDF)
-              </a>
-            )}
-            <span className="flex items-center gap-1">
-              <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className={iconLink} aria-label="GitHub profile (opens in a new tab)">
-                <GitHubMark className="h-5 w-5" />
-              </a>
-              <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className={iconLink} aria-label="LinkedIn profile (opens in a new tab)">
-                <LinkedInMark className="h-5 w-5" />
-              </a>
-            </span>
-          </div>
-
-          <dl className="line-in mt-10 grid max-w-xl grid-cols-2 gap-x-8 gap-y-3 border-t border-line pt-5 text-sm" style={{ ["--l" as string]: 3 }}>
-            <div>
-              <dt className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-3">Degree</dt>
-              <dd className="mt-1 text-ink">Software Engineering · MedTech · {graduation}</dd>
-            </div>
-            <div>
-              <dt className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-ink-3">Based in</dt>
-              <dd className="mt-1 text-ink">
-                {profile.location.split(",")[0]} · {profile.timezone} · relocation or remote
-              </dd>
-            </div>
-          </dl>
         </div>
 
-        {/* "Terminal" with verified results; every line links to its case study. */}
-        <aside aria-labelledby="results-title" className="line-in" style={{ ["--l" as string]: 1 }}>
-          <div className="overflow-hidden rounded-2xl border border-[#2a2f36] bg-[#0f1216] text-[#e6e6e3] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.55)] transition-transform duration-500 hover:-translate-y-1">
-            <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-              <span className="h-3 w-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
-              <span className="h-3 w-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
-              <span className="h-3 w-3 rounded-full bg-[#28c840]" aria-hidden="true" />
-              <p id="results-title" className="ml-2 font-mono text-[0.72rem] text-white/55">
-                ~/achref — selected results
-              </p>
-            </div>
-            <div className="px-4 pb-4 pt-3 font-mono text-[0.8rem] leading-relaxed">
-              <p className="line-in text-white/60" style={{ ["--l" as string]: 1 }}>
-                <span className="text-[#4fd1ae]">$</span> portfolio --highlights --verified
-              </p>
-              <ul className="mt-2 space-y-1">
-                {highlights.map(({ project, metric }, i) => (
-                  <li key={project.slug} className="line-in" style={{ ["--l" as string]: i + 2 }}>
-                    <Link
-                      href={projectHref(project)}
-                      className="group -mx-2 flex items-start justify-between gap-3 rounded-lg px-2 py-2.5 transition-colors hover:bg-white/[0.06] focus-visible:bg-white/[0.06]"
-                    >
-                      <span className="min-w-0">
-                        <span className="flex items-baseline gap-2">
-                          <span className="text-[#4fd1ae]">✓</span>
-                          <span className="text-[1.35rem] font-medium tracking-tight text-white">{metric.value}</span>
-                        </span>
-                        <span className="mt-0.5 block pl-5 font-sans text-[0.82rem] leading-snug text-white/70">{metric.label}</span>
-                        <span className="mt-1 block pl-5 text-[0.7rem] uppercase tracking-[0.12em] text-[#4fd1ae]/90">
-                          {project.shortTitle ?? project.title}
-                        </span>
-                      </span>
-                      <ArrowUpRight className="mt-1.5 h-4 w-4 shrink-0 text-white/40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="line-in mt-3 border-t border-white/10 pt-3 text-white/60" style={{ ["--l" as string]: highlights.length + 2 }}>
-                <span className="text-[#4fd1ae]">$</span> open-to --roles
-              </p>
-              <p className="line-in mt-1 font-sans text-[0.85rem] text-white/85" style={{ ["--l" as string]: highlights.length + 3 }}>
-                {profile.targetRoles.join(" · ")}
-              </p>
-              <p className="line-in caret mt-3 text-[#4fd1ae]" style={{ ["--l" as string]: highlights.length + 4 }}>
-                $
-              </p>
+        <h1 className="mt-10 font-display text-ink sm:mt-12">
+          <span className="rise flex items-center gap-[0.35em] text-[clamp(1.5rem,3.2vw,2.75rem)] font-light leading-none text-ink-2" style={d(1)}>
+            Hello, I&apos;m
+            {profile.photo && <Avatar size="1.45em" decorative preload className="ring-1 ring-line-strong" />}
+          </span>
+          <span className="mt-3 block text-[clamp(3.1rem,8.6vw,7.75rem)] font-bold leading-[0.92] sm:mt-4">
+            <RevealWords text={profile.name} offset={1} />
+          </span>
+        </h1>
+
+        <div className="mt-10 grid gap-10 border-t border-line pt-8 sm:mt-12 lg:grid-cols-12 lg:gap-8">
+          <p className="rise font-wide text-[clamp(1.4rem,2.5vw,2.05rem)] leading-[1.18] text-ink lg:col-span-7" style={d(4)}>
+            <span className="sr-only">{profile.headline}</span>
+            <span aria-hidden="true">
+              {rotation.lead}{" "}
+              <span className="font-semibold">
+                <HeroRotator words={rotation.focus} />
+              </span>
+              <span className="mt-1 block font-light text-ink-3">{rotation.tail}</span>
+            </span>
+          </p>
+
+          <div className="rise lg:col-span-5" style={d(5)}>
+            <p className="max-w-[34rem] text-[1.0625rem] leading-relaxed text-ink-2">{profile.intro}</p>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link href="/#work" data-magnetic className={button("primary")}>
+                <ArrowLabel>See my work</ArrowLabel>
+              </Link>
+              <Link href="/#contact" data-magnetic className={button("secondary")}>
+                Get in touch
+              </Link>
+              {profile.resume.enabled && (
+                <a href={profile.resume.href} download data-magnetic className={button("secondary")}>
+                  <Download className="h-4 w-4" /> Resume (PDF)
+                </a>
+              )}
+              <span className="flex items-center gap-2">
+                <a href={profile.links.github} target="_blank" rel="noopener noreferrer" data-magnetic className={iconLink} aria-label="GitHub profile (opens in a new tab)">
+                  <GitHubMark className="h-[18px] w-[18px]" />
+                </a>
+                <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" data-magnetic className={iconLink} aria-label="LinkedIn profile (opens in a new tab)">
+                  <LinkedInMark className="h-[18px] w-[18px]" />
+                </a>
+              </span>
             </div>
           </div>
-        </aside>
+        </div>
+
+        {/* Verified results — each number links to the case study it comes from. */}
+        <section aria-labelledby="results-title" className="rise mt-14 sm:mt-16" style={d(6)}>
+          <h2 id="results-title" className="text-[0.8125rem] font-medium text-ink-3">
+            A few verified results
+          </h2>
+          <ul className="mt-4 grid border-t border-line sm:grid-cols-3">
+            {highlights.map(({ project, metric }, i) => (
+              <li key={project.slug} className={`border-b border-line sm:border-b-0 ${i > 0 ? "sm:border-l sm:pl-6 lg:pl-8" : ""} ${i < highlights.length - 1 ? "sm:pr-6 lg:pr-8" : ""}`}>
+                <Link href={projectHref(project)} className="group flex h-full flex-col py-6">
+                  <span className="font-display text-[clamp(2.2rem,3.6vw,3.1rem)] font-semibold leading-none text-ink transition-colors duration-300 group-hover:text-accent">
+                    {metric.value}
+                  </span>
+                  <span className="mt-3 text-[0.9375rem] leading-snug text-ink-2">{metric.label}</span>
+                  {metric.context && <span className="mt-1.5 text-[0.8125rem] leading-snug text-ink-3">{metric.context}</span>}
+                  <ArrowLabel className="mt-auto pt-5 text-[0.875rem] font-medium text-ink">{project.shortTitle ?? project.title}</ArrowLabel>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </Container>
 
-      <TechMarquee />
+      <RoleBand />
     </section>
   );
 }
 
-/** Slow, pausable strip of every skill from skills.ts. Decorative copy is hidden from screen readers. */
-function TechMarquee() {
-  const skills = skillGroups.flatMap((g) => g.skills);
-  const row = (hidden: boolean) => (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center gap-10 pr-10">
-      {skills.map((s) => (
-        <li key={s} className="flex items-center gap-10 whitespace-nowrap font-mono text-[0.8rem] uppercase tracking-[0.12em] text-ink-3">
-          {s}
-          <span aria-hidden="true" className="h-1 w-1 rounded-full bg-line-strong" />
+/**
+ * A slow band of very large type naming what I build (from
+ * profile.headlineRotation). Decorative; the same words are in the headline.
+ */
+function RoleBand() {
+  const words = profile.headlineRotation.focus.map((w) => w.replace(/\.$/, ""));
+  const row = (key: string) => (
+    <ul key={key} className="flex shrink-0 items-center">
+      {words.map((w, i) => (
+        <li key={w} className="flex items-center whitespace-nowrap">
+          <span
+            className={`font-display text-[clamp(2.75rem,7vw,6.5rem)] font-semibold leading-none ${
+              i % 2 === 1 ? "text-transparent [-webkit-text-stroke:1.25px_var(--ink)]" : "text-ink"
+            }`}
+          >
+            {w}
+          </span>
+          <span aria-hidden="true" className="mx-[0.45em] text-[clamp(2rem,4.5vw,4rem)] leading-none text-accent">
+            ✳
+          </span>
         </li>
       ))}
     </ul>
   );
   return (
-    <div className="relative border-y border-line bg-surface/40 py-4">
-      <p className="sr-only">Technologies I work with:</p>
-      <div className="marquee overflow-hidden">
-        <div className="marquee-track flex w-max">
-          {row(false)}
-          {row(true)}
-        </div>
+    <div className="marquee overflow-hidden border-y border-line py-6 sm:py-8" aria-hidden="true">
+      <div className="marquee-track flex w-max">
+        {row("a")}
+        {row("b")}
       </div>
     </div>
   );
 }
+

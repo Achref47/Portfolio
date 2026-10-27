@@ -8,9 +8,10 @@ export const site = {
 
   /** Header and footer navigation. `href` can be a page or a homepage section (/#id). */
   nav: [
-    { href: "/projects", label: "Projects" },
-    { href: "/#experience", label: "Experience" },
     { href: "/#about", label: "About" },
+    { href: "/#work", label: "Work" },
+    { href: "/#experience", label: "Experience" },
+    { href: "/projects", label: "All projects" },
     { href: "/#contact", label: "Contact" },
   ],
 
@@ -28,7 +29,7 @@ export const site = {
   ],
 
   /**
-   * The three numbers in the hero's "Selected results" panel. Each points at a
+   * The three numbers in the hero's "Selected results" row. Each points at a
    * metric of a project (index in its `metrics` array), so the number is
    * written only once, in projects.ts.
    */

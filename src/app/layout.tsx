@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif } from "next/font/google";
+import { Archivo } from "next/font/google";
 import { BackToTop, PointerEffects } from "@/components/effects";
 import { RevealOnScroll } from "@/components/reveal-on-scroll";
 import { SiteFooter } from "@/components/site-footer";
@@ -12,20 +12,16 @@ import { siteUrl } from "@/lib/content";
 import { themeInitScript } from "@/lib/theme-script";
 import "./globals.css";
 
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
+/**
+ * One variable family for the whole site. The width axis does the work a
+ * second typeface usually does: wide and heavy for names and titles, normal
+ * width for reading. Code uses the system monospace (see globals.css).
+ */
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-});
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  subsets: ["latin"],
-  weight: "400",
+  axes: ["wdth"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -46,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6f5f1",
+  themeColor: "#f6f6f7",
 };
 
 /** Structured data describing the site owner (schema.org Person), sanitised as the Next.js JSON-LD guide recommends. */
@@ -68,7 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${plexSans.variable} ${plexMono.variable} ${instrumentSerif.variable} antialiased`}
+      className={`${archivo.variable} antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

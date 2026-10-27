@@ -115,12 +115,12 @@ export function CommandPalette({ items = [], email }: { items?: CommandItem[]; e
       <button
         type="button"
         onClick={open}
-        className="hidden items-center gap-2 rounded-lg border border-line bg-surface/70 py-1.5 pl-2.5 pr-1.5 text-sm text-ink-3 transition-colors hover:border-line-strong hover:text-ink lg:inline-flex"
+        className="hidden items-center gap-2 rounded-full border border-line-strong py-1.5 pl-3 pr-1.5 text-sm text-ink-3 transition-colors hover:border-ink hover:text-ink lg:inline-flex"
         aria-label="Open command palette (Ctrl+K)"
       >
         <Search className="h-3.5 w-3.5" />
         <span>Jump to…</span>
-        <kbd className="rounded border border-line bg-surface-2 px-1.5 py-0.5 font-mono text-[0.65rem] text-ink-2">Ctrl K</kbd>
+        <kbd className="rounded-full bg-surface-2 px-2 py-0.5 text-[0.6875rem] text-ink-2">Ctrl K</kbd>
       </button>
       <button
         type="button"
@@ -155,7 +155,7 @@ export function CommandPalette({ items = [], email }: { items?: CommandItem[]; e
             aria-activedescendant={results[active] ? `${listId}-${results[active].id}` : undefined}
             className="h-14 w-full bg-transparent text-[0.95rem] text-ink placeholder:text-ink-3 focus:outline-none"
           />
-          <kbd className="rounded border border-line bg-surface-2 px-1.5 py-0.5 font-mono text-[0.65rem] text-ink-3">Esc</kbd>
+          <kbd className="rounded border border-line bg-surface-2 px-1.5 py-0.5 text-[0.6875rem] text-ink-3">Esc</kbd>
         </div>
 
         <ul ref={listRef} id={listId} role="listbox" aria-label="Results" className="max-h-[min(60vh,440px)] overflow-y-auto p-2">
@@ -165,7 +165,7 @@ export function CommandPalette({ items = [], email }: { items?: CommandItem[]; e
             const selected = i === active;
             return (
               <li key={item.id} role="presentation">
-                {header && <p className="px-3 pb-1 pt-3 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-3">{header}</p>}
+                {header && <p className="px-3 pb-1 pt-3 text-[0.75rem] font-medium text-ink-3">{header}</p>}
                 <div
                   id={`${listId}-${item.id}`}
                   role="option"
@@ -192,7 +192,7 @@ export function CommandPalette({ items = [], email }: { items?: CommandItem[]; e
           })}
         </ul>
 
-        <div className="flex items-center justify-between gap-3 border-t border-line bg-surface-2/60 px-4 py-2.5 font-mono text-[0.68rem] text-ink-3">
+        <div className="flex items-center justify-between gap-3 border-t border-line bg-surface-2/60 px-4 py-2.5 text-[0.75rem] text-ink-3">
           <span aria-live="polite">{notice || `${results.length} result${results.length === 1 ? "" : "s"}`}</span>
           <span className="hidden sm:inline">↑↓ to move · Enter to open</span>
         </div>

@@ -1,17 +1,19 @@
 import Link from "next/link";
-import { Container, Kicker } from "@/components/ui";
+import { ArrowLabel, button, Container, Kicker } from "@/components/ui";
 
 export default function NotFound() {
   return (
     <Container className="py-28">
-      <Kicker>404</Kicker>
-      <h1 className="mt-4 font-display text-5xl tracking-tight text-ink">This page does not exist.</h1>
-      <p className="mt-4 max-w-xl text-ink-2">The link may be outdated, or the project may have moved.</p>
-      <div className="mt-8 flex gap-3">
-        <Link href="/projects" className="rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-bg hover:opacity-90">
-          Browse all projects
+      <Kicker>Error 404</Kicker>
+      <h1 className="mt-4 font-display text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-[0.98] text-ink">
+        This page does not exist<span className="text-accent">.</span>
+      </h1>
+      <p className="mt-5 max-w-xl text-[1.0625rem] text-ink-2">The link may be outdated, or the project may have moved.</p>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Link href="/projects" className={button("primary")}>
+          <ArrowLabel>Browse all projects</ArrowLabel>
         </Link>
-        <Link href="/" className="rounded-lg border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink hover:bg-surface-2">
+        <Link href="/" className={button("secondary")}>
           Home
         </Link>
       </div>
