@@ -9,7 +9,7 @@
 export type CategoryId = "software" | "ai-ml" | "data" | "mobile" | "iot";
 
 /** What kind of work it was. Labels live in categories.ts (`projectTypes`). */
-export type ProjectType = "industry" | "internship" | "independent" | "assessment" | "academic" | "coursework";
+export type ProjectType = "industry" | "professional" | "internship" | "independent" | "assessment" | "academic" | "coursework";
 
 /**
  * What a resource link points to. Use the kind that matches reality:

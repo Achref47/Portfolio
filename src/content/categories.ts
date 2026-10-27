@@ -15,6 +15,7 @@ export const categories: { id: CategoryId; label: string; short: string }[] = [
 /** Labels for the kind of work. To add one, also add its id to `ProjectType` in types.ts. */
 export const projectTypes: Record<ProjectType, string> = {
   industry: "Industry capstone",
+  professional: "Professional work",
   internship: "Internship",
   independent: "Independent project",
   assessment: "Technical assessment",

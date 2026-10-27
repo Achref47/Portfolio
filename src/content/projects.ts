@@ -784,10 +784,10 @@ export const projects: Project[] = [
     shortTitle: "Privilege Travel",
     tagline: "Flight and hotel booking with a Gemini chatbot, security alerting and an analytics admin dashboard.",
     summary:
-      "Built during my internship at Privilege Travel in Tunis as the only full-stack developer in a three-person team: a React/Redux front end, Node.js/Express REST APIs and MySQL, with email vouchers, a Chart.js admin dashboard and a Google Gemini chatbot.",
+      "Built while working as the full-stack developer at Privilege Travel in Tunis — the only full-stack developer in a three-person team: a React/Redux front end, Node.js/Express REST APIs and MySQL, with email vouchers, a Chart.js admin dashboard and a Google Gemini chatbot.",
     year: "2024–2025",
-    type: "internship",
-    context: "Internship · Privilege Travel, Tunis",
+    type: "professional",
+    context: "Full-stack developer · Privilege Travel, Tunis",
     role: "Full-stack developer and Scrum Master",
     team: "Three-person team",
     categories: ["software"],
@@ -829,9 +829,9 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "85%", label: "of chatbot requests resolved without staff help (pilot testing)", context: "internship report, pilot group" },
-      { value: "92%", label: "test coverage on critical backend paths", context: "internship report" },
-      { value: "198 ms", label: "average API response time", context: "internship report" },
+      { value: "85%", label: "of chatbot requests resolved without staff help (pilot testing)", context: "project report, pilot group" },
+      { value: "92%", label: "test coverage on critical backend paths", context: "project report" },
+      { value: "198 ms", label: "average API response time", context: "project report" },
     ],
     details: {
       glance: {
@@ -842,7 +842,7 @@ export const projects: Project[] = [
           "In pilot testing the chatbot resolved 85% of requests without staff help; 92% test coverage on critical backend paths.",
       },
       overview: [
-        "Privilege Travel is a Tunisian travel agency competing with global booking sites. I designed and built its booking platform end to end during my internship, and acted as Scrum Master for the team.",
+        "Privilege Travel is a Tunisian travel agency competing with global booking sites. I designed and built its booking platform end to end as its full-stack developer, and acted as Scrum Master for the team.",
       ],
       problem: [
         "Bookings were handled manually, which made customers wait for staff and made it hard for the agency to see what was selling. The agency needed self-service booking, quick answers to common questions and a secure admin back office.",

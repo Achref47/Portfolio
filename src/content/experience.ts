@@ -35,11 +35,11 @@ export const experience: ExperienceEntry[] = [
     projectHref: "/projects/aura-ecosystem",
   },
   {
-    role: "Full-Stack Software Developer Intern",
+    role: "Full-Stack Software Developer",
     organisation: "Privilege Travel",
     location: "Tunis, Tunisia",
     period: "Jan 2024 – Jul 2025",
-    type: "Internship",
+    type: "Employment",
     context: "Only full-stack developer in a three-person team; Scrum Master for four two-week sprints; mentored two teammates.",
     points: [
       "Built a flight- and hotel-booking platform (React/Redux, Node.js/Express REST APIs, MySQL) with email vouchers, a Chart.js admin dashboard and a Google Gemini chatbot; in pilot testing the chatbot resolved 85% of requests without staff help.",
